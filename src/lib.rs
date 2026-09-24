@@ -6,6 +6,8 @@ use std::fs::{self, File};
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 
+pub mod evaluation;
+
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 const INPUTS: usize = 27; // 3x3 RGB neighborhood
@@ -273,8 +275,12 @@ pub fn load_rgb(path: &Path) -> Result<RgbImage> {
 
 fn image_crops(path: &Path, training: bool) -> Result<Vec<RgbImage>> {
     let image = load_rgb(path)?;
+    crops_from_image(&image, training)
+}
+
+fn crops_from_image(image: &RgbImage, training: bool) -> Result<Vec<RgbImage>> {
     if image.width() < 4 || image.height() < 4 {
-        return Err(format!("image is smaller than 4x4: {}", path.display()).into());
+        return Err("image is smaller than 4x4".into());
     }
     let width = image.width().min(512) & !1;
     let height = image.height().min(512) & !1;
@@ -289,7 +295,7 @@ fn image_crops(path: &Path, training: bool) -> Result<Vec<RgbImage>> {
     positions.dedup();
     Ok(positions
         .into_iter()
-        .map(|(x, y)| imageops::crop_imm(&image, x, y, width, height).to_image())
+        .map(|(x, y)| imageops::crop_imm(image, x, y, width, height).to_image())
         .collect())
 }
 

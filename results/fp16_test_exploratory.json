@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "runtime": {
+    "package_version": "0.1.0",
+    "os": "macos",
+    "arch": "aarch64",
+    "neon_enabled": true
+  },
+  "dataset": {
+    "manifest_path": "data/gallery_manifest.json",
+    "data_root": "data",
+    "manifest_sha256": "84597037ec5fe9c082892ea93a81d19b7b669915a064d867f6074dc94a685441",
+    "gallery": "https://blog.ast.moe/gallery/",
+    "gallery_page_sha256": "b62282c28ab2957ac9a632cc626946e0e79aadd6a5561fcdeb1ff18892458d6c",
+    "split": "test",
+    "evaluation_status": "exploratory: these test images were inspected during initial training selection",
+    "exclusion_manifest_sha256": null,
+    "verification": {
+      "manifest_sha256": "84597037ec5fe9c082892ea93a81d19b7b669915a064d867f6074dc94a685441",
+      "images": 26,
+      "train": 18,
+      "val": 4,
+      "test": 4,
+      "final_holdout": 0,
+      "total_bytes": 281146180
+    }
+  },
+  "settings": {
+    "jpeg_quality": 70,
+    "output_jpeg_quality": 95,
+    "timing_runs": 3,
+    "crop": "center; at most 512x512; even dimensions; synthetic 2x JPEG input",
+    "psnr": "RGB pixel-weighted MSE; infinite PSNR encoded as null",
+    "timing": "milliseconds; decode, synthetic pair, DNN inference, and output JPEG encode are separate; inference mean over timing_runs"
+  },
+  "models": [
+    {
+      "path": "data/gallery_fp16_selected.qsr",
+      "format": "QSR1-FP16",
+      "sha256": "23fa6e800b7fb1cc76f7d790bdb61c338d81ce66f588cfe0978c60c7bff57916",
+      "bytes": 1006
+    }
+  ],
+  "images": [
+    {
+      "path": "test/06_545A0194_hu_7fb6c09e0567f66b.jpg",
+      "source_sha256": "16435c97f062a2b7397de6cd31b0da7987f306cbccaf45cdf2b675948f1a6dca",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 37.81063273401031,
+      "source_read_decode_ms": 104.237584,
+      "synthetic_pair_ms": 7.456583,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 37.848317140017535,
+          "inference_ms": 11.993139,
+          "output_jpeg_encode_ms": 1.855958
+        }
+      ]
+    },
+    {
+      "path": "test/12_IMG_2485_hu_8d2fe7545e781763.jpg",
+      "source_sha256": "35666396b7069289b34359a04a709eb58a5fdaa507f0372c5ec6685d08b5c0b3",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 32.46528498615389,
+      "source_read_decode_ms": 364.997208,
+      "synthetic_pair_ms": 14.560625,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 32.46694156780155,
+          "inference_ms": 12.110055333333333,
+          "output_jpeg_encode_ms": 2.142416
+        }
+      ]
+    },
+    {
+      "path": "test/18_IMG_6638_hu_263c54e9af5c59e0.jpg",
+      "source_sha256": "544887f24812f2a68f61f1953de309aabc60901afe90548c7dce9e68129b50b8",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 26.57505048029018,
+      "source_read_decode_ms": 52.926792,
+      "synthetic_pair_ms": 7.252292,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 26.90356528606443,
+          "inference_ms": 11.875707999999998,
+          "output_jpeg_encode_ms": 2.516541
+        }
+      ]
+    },
+    {
+      "path": "test/24_IMG_7187_hu_80e8925285f1ffe4.jpg",
+      "source_sha256": "72db11e12c5af9a25427c5adf4a2f73a2a4b014e22d71fe4fb95419a40e7f134",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 38.668074765057064,
+      "source_read_decode_ms": 95.344375,
+      "synthetic_pair_ms": 7.197875000000001,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 38.575777652111356,
+          "inference_ms": 12.192291333333335,
+          "output_jpeg_encode_ms": 2.194042
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "images": 4,
+    "rgb_channels": 3145728,
+    "baseline_psnr_db": 31.151105179305162,
+    "models": [
+      {
+        "model_index": 0,
+        "psnr_db": 31.38221670164888,
+        "mean_inference_ms_per_image": 12.042798416666667,
+        "mean_output_jpeg_encode_ms_per_image": 2.17723925
+      }
+    ]
+  }
+}

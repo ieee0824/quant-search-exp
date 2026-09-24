@@ -41,6 +41,34 @@ cargo run --release -- bench data/gallery_fp16_selected.qsr input.jpg 5
 
 この数値は中央の切り出しと、人工的に作った低解像度JPEGに対する結果。初期の学習条件を調べる段階で評価用画像も一度見ているため、完全な盲検評価ではない。
 
+## 再現可能な評価レポート（Issue #1）
+
+`gallery_manifest.json` はギャラリー掲載順、元画像URL、保存先、byte数、SHA-256、train/val/testの分割を固定する。以下のコマンドは**manifestを書き換えずに**26枚を取得し、全画像のbyte数とSHA-256、およびURLとsplit規則を検証する。画像本体は `.gitignore` によりGit管理しない。
+
+```sh
+python3 scripts/fetch_manifest.py data/gallery_manifest.json data
+cargo run --release -- verify-data data/gallery_manifest.json data
+```
+
+候補の選択には`val`だけを使う。`test`の4枚は過去に学習条件の探索で見たため、既存結果の再現・探索的な比較に限る。レポートにもこの扱いを記録する。
+
+```sh
+cargo run --release -- eval-report data/gallery_manifest.json data val results/fp16_val.json data/gallery_fp16_selected.qsr --runs 3
+cargo run --release -- eval-report data/gallery_manifest.json data test results/fp16_test_exploratory.json data/gallery_fp16_selected.qsr --runs 3
+```
+
+同じコマンドで複数のモデルパスを渡せる。現時点で読み込める形式は`QSR1`のFP16モデルで、後続の量子化形式はモデル読込器へ追加する。JSONにはモデルとmanifestのSHA-256、全画像の検証結果、設定、画像別と全体のRGB PSNR、実ファイル容量、処理別の時間を残す。全体PSNRは画像ごとのdBの平均ではなく、全RGB画素の二乗誤差を集計して求める。時間は実行環境や負荷で変わり、モデル推論は指定回数の平均。元JPEGの読込・decode、低解像度JPEG作成とbicubic拡大、DNN推論、出力JPEGのメモリ内encodeを分けている。出力JPEGの再圧縮誤差はPSNRに含めない。
+
+保存した[検証用レポート](results/fp16_val.json)と[探索的評価用レポート](results/fp16_test_exploratory.json)は、従来の`eval`と同じ値（四捨五入してそれぞれ34.355→34.447 dB、31.151→31.382 dB）を再現する。レポート中の`evaluation_status`は両者を区別する。
+
+厳密な最終評価には、**モデル学習にも候補選択にも使用していない新しい画像**を別途用意する。最初の評価前に画像の出典・byte数・SHA-256を別manifestへ固定し、各レコードを`split: "final"`、`path: "final/01_filename.jpg"`の形で記録する。manifestの構造は既存のものと同じで、`gallery`には新しい画像群の出典ページURL、`page_sha256`にはそのページのSHA-256を入れる。その画像を`data/final/`へ配置し、次を実行する。
+
+```sh
+cargo run --release -- eval-report data/final_manifest.json data final results/final.json data/gallery_fp16_selected.qsr --exclude-manifest data/gallery_manifest.json
+```
+
+このコマンドは新しい画像のハッシュを検証し、既存ギャラリーmanifestとURLまたは画像ハッシュが重なれば拒否する。**未使用だったこと自体はコードだけでは証明できない**ため、取得時期と候補選択に使っていない事実も最終結果とともに記録する。最終画像の結果を見てから候補を選び直した場合、その結果は探索的な比較として扱う。
+
 ## 任意の画像で実行する場合
 
 学習用、検証用、評価用の画像をそれぞれ別のディレクトリへ置く。各ディレクトリ直下の `.jpg`、`.jpeg`、`.png` を読み込む。
