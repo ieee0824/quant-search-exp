@@ -176,7 +176,7 @@ pub fn decode_scale(exponent: u8) -> Result<f32> {
     Ok(2.0_f32.powi(exponent as i32 - 127))
 }
 
-fn encode_default_scale(weights: &[f32], format: Fp6Format, offset: i8) -> Result<u8> {
+pub(crate) fn encode_default_scale(weights: &[f32], format: Fp6Format, offset: i8) -> Result<u8> {
     if weights.iter().any(|x| !x.is_finite()) {
         return Err("non-finite model weight".into());
     }

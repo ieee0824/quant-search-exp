@@ -2,6 +2,10 @@ use quant_search_exp::direct::{DirectModel, evaluate as evaluate_direct, train a
 use quant_search_exp::evaluation::{ReportOptions, evaluate_report, verify_manifest_data};
 use quant_search_exp::experiments::{search_uniform_fp6, select_mixed_fp6};
 use quant_search_exp::fp6::{Fp6Format, Fp6Model};
+use quant_search_exp::matched::{
+    Kind as MatchedKind, TrainOptions, evaluate as evaluate_matched,
+    quantize_fp6 as quantize_matched_fp6, train as train_matched,
+};
 use quant_search_exp::{
     InferenceModel, Model, Result, bicubic_2x, evaluate, load_rgb, train, upscale,
 };
@@ -9,7 +13,7 @@ use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant};
 
 fn usage() -> &'static str {
-    "Usage:\n  quant-search-exp train <high_res_dir> <model.qsr> [epochs=8] [samples_per_epoch=20000] [jpeg_quality=70] [seed=42] [learning_rate=0.001]\n  quant-search-exp train-direct <high_res_dir> <model.qsd> [epochs=8] [samples_per_epoch=20000] [jpeg_quality=70] [seed=42] [learning_rate=0.001]\n  quant-search-exp eval <model.qsr> <held_out_dir> [jpeg_quality=70]\n  quant-search-exp eval-direct <model.qsd> <held_out_dir> [jpeg_quality=70]\n  quant-search-exp eval-direct-report <model.qsd> <held_out_dir> <output.json> [jpeg_quality=70]\n  quant-search-exp quantize-int8 <model.qsr> <model.qi8>\n  quant-search-exp quantize-fp6 <model.qsr> <model.qsf> <e3m2|e2m3>\n  quant-search-exp select-mixed-fp6 <model.qsr> <manifest.json> <data_root> <output.qsf> <record.json> [quality=70]\n  quant-search-exp search-fp6 <model.qsr> <manifest.json> <data_root> <output.qsf> <record.json> <e3m2|e2m3> [quality=70]\n  quant-search-exp verify-data <manifest.json> <data_root>\n  quant-search-exp eval-report <manifest.json> <data_root> <val|test|final> <output.json> <model_file> [more_model_files...] [--quality N] [--runs N] [--exclude-manifest path]\n  quant-search-exp upscale <model_file> <input.jpg> <output.jpg>\n  quant-search-exp upscale-direct <model.qsd> <input.jpg> <output.jpg>\n  quant-search-exp bench <model.qsr> <input.jpg> [runs=5]"
+    "Usage:\n  quant-search-exp train <high_res_dir> <model.qsr> [epochs=8] [samples_per_epoch=20000] [jpeg_quality=70] [seed=42] [learning_rate=0.001]\n  quant-search-exp train-direct <high_res_dir> <model.qsd> [epochs=8] [samples_per_epoch=20000] [jpeg_quality=70] [seed=42] [learning_rate=0.001]\n  quant-search-exp train-matched <residual|direct> <hidden> <high_res_dir> <model.qsm> <epochs> <target_pixels_per_epoch> <jpeg_quality> <seed> <learning_rate>\n  quant-search-exp quantize-matched-fp6 <model.qsm> <model.qsm6> <e3m2|e2m3>\n  quant-search-exp eval-matched <model.qsm|model.qsm6> <held_out_dir> <output.json> [jpeg_quality=70]\n  quant-search-exp eval <model.qsr> <held_out_dir> [jpeg_quality=70]\n  quant-search-exp eval-direct <model.qsd> <held_out_dir> [jpeg_quality=70]\n  quant-search-exp eval-direct-report <model.qsd> <held_out_dir> <output.json> [jpeg_quality=70]\n  quant-search-exp quantize-int8 <model.qsr> <model.qi8>\n  quant-search-exp quantize-fp6 <model.qsr> <model.qsf> <e3m2|e2m3>\n  quant-search-exp select-mixed-fp6 <model.qsr> <manifest.json> <data_root> <output.qsf> <record.json> [quality=70]\n  quant-search-exp search-fp6 <model.qsr> <manifest.json> <data_root> <output.qsf> <record.json> <e3m2|e2m3> [quality=70]\n  quant-search-exp verify-data <manifest.json> <data_root>\n  quant-search-exp eval-report <manifest.json> <data_root> <val|test|final> <output.json> <model_file> [more_model_files...] [--quality N] [--runs N] [--exclude-manifest path]\n  quant-search-exp upscale <model_file> <input.jpg> <output.jpg>\n  quant-search-exp upscale-direct <model.qsd> <input.jpg> <output.jpg>\n  quant-search-exp bench <model.qsr> <input.jpg> [runs=5]"
 }
 
 fn parse_fp6_format(value: &str) -> Result<Fp6Format> {
@@ -142,6 +146,38 @@ fn run() -> Result<()> {
             optional(&args, 7, 42_u64)?,
             optional(&args, 8, 0.001_f32)?,
         ),
+        Some("train-matched") if args.len() == 11 => train_matched(
+            Path::new(&args[4]),
+            Path::new(&args[5]),
+            TrainOptions {
+                kind: MatchedKind::parse(&args[2])?,
+                hidden: args[3].parse()?,
+                epochs: args[6].parse()?,
+                target_pixels_per_epoch: args[7].parse()?,
+                quality: args[8].parse()?,
+                seed: args[9].parse()?,
+                learning_rate: args[10].parse()?,
+            },
+        ),
+        Some("eval-matched") if (5..=6).contains(&args.len()) => {
+            let report = evaluate_matched(
+                Path::new(&args[2]),
+                Path::new(&args[3]),
+                optional(&args, 5, 70_u8)?,
+            )?;
+            std::fs::write(&args[4], serde_json::to_vec_pretty(&report)?)?;
+            println!("saved {}", args[4]);
+            Ok(())
+        }
+        Some("quantize-matched-fp6") if args.len() == 5 => {
+            quantize_matched_fp6(
+                Path::new(&args[2]),
+                Path::new(&args[3]),
+                parse_fp6_format(&args[4])?,
+            )?;
+            println!("saved {}", args[3]);
+            Ok(())
+        }
         Some("eval") if (4..=5).contains(&args.len()) => {
             let model = Model::load_fp16(Path::new(&args[2]))?;
             let quality = optional(&args, 4, 70_u8)?;

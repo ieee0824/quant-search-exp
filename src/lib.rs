@@ -10,6 +10,7 @@ pub mod direct;
 pub mod evaluation;
 pub mod experiments;
 pub mod fp6;
+pub mod matched;
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 

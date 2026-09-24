@@ -1,0 +1,323 @@
+{
+  "protocol": {
+    "train_images": 174,
+    "final_images": 12,
+    "seeds": [
+      42,
+      43
+    ],
+    "epochs": 24,
+    "target_pixels_per_epoch": 800000,
+    "jpeg_quality": 70,
+    "learning_rate": 0.0003,
+    "train_manifest_sha256": "17180d4cfe081bad4639d8c4e0940f926757a18f6291f3cd4c0c25b29a29959d",
+    "final_manifest_sha256": "81e7bb88e9bd89f1b0e17ec70e5b732a1e2447828936caeef5461b6231cd444e",
+    "evaluation": "one central crop up to 512x512 per final image"
+  },
+  "baselines": {
+    "nearest_mean_image_psnr_db": 35.65068562289694,
+    "bicubic_mean_image_psnr_db": 36.63374219269757
+  },
+  "models": [
+    {
+      "kind": "residual",
+      "hidden": 16,
+      "parameters": 499,
+      "model_bytes": 1010,
+      "mean_image_psnr_db": 36.67214160466293,
+      "mean_image_gain_over_bicubic_db": 0.0383994119653693,
+      "runs": [
+        {
+          "seed": 42,
+          "model_sha256": "bac4fb7ec863724e27e38048948323fc1de756026badb4f165ce9456c33a4c67",
+          "pooled_psnr_db": 33.45500227573554
+        },
+        {
+          "seed": 43,
+          "model_sha256": "88fd78e68f4a1310b7b3df09429af44b1637c3b78dff36deaea2c84be7559c71",
+          "pooled_psnr_db": 33.437846322006315
+        }
+      ]
+    },
+    {
+      "kind": "direct",
+      "hidden": 12,
+      "parameters": 492,
+      "model_bytes": 996,
+      "mean_image_psnr_db": 36.484655218471254,
+      "mean_image_gain_over_bicubic_db": -0.14908697422630915,
+      "runs": [
+        {
+          "seed": 42,
+          "model_sha256": "4463cac392607ba01c397bcc0cce189ad7999a95d78d5dcc7bbbcfed1a73f0b3",
+          "pooled_psnr_db": 33.36407843938624
+        },
+        {
+          "seed": 43,
+          "model_sha256": "40016f8acd0d1011265f5881c1dc9a99583b93a4ded7fabda8a88a2eee5fd804",
+          "pooled_psnr_db": 33.33567982043884
+        }
+      ]
+    },
+    {
+      "kind": "residual",
+      "hidden": 21,
+      "parameters": 654,
+      "model_bytes": 1320,
+      "mean_image_psnr_db": 36.645538724386206,
+      "mean_image_gain_over_bicubic_db": 0.0117965316886434,
+      "runs": [
+        {
+          "seed": 42,
+          "model_sha256": "0a731fb28d45371d9e1b43d5ade10b2e60ce3bdd3bc4c7aa3beb40cc652a7b45",
+          "pooled_psnr_db": 33.44080319164536
+        },
+        {
+          "seed": 43,
+          "model_sha256": "e617033d21c84b7a31f94d168c14d2032d3853719e6553126927afd42bfe292f",
+          "pooled_psnr_db": 33.43003159853424
+        }
+      ]
+    },
+    {
+      "kind": "direct",
+      "hidden": 16,
+      "parameters": 652,
+      "model_bytes": 1316,
+      "mean_image_psnr_db": 36.496195393559695,
+      "mean_image_gain_over_bicubic_db": -0.13754679913786783,
+      "runs": [
+        {
+          "seed": 42,
+          "model_sha256": "71a2e4eea89bd6128e0c9569b1554f0102c81b5c429114a5eaee1a241060aadf",
+          "pooled_psnr_db": 33.36503136456627
+        },
+        {
+          "seed": 43,
+          "model_sha256": "8015e1c53dab433821b46af7990dc01072b159ed4268ffdb41d8ed5630ab9159",
+          "pooled_psnr_db": 33.35195234903935
+        }
+      ]
+    }
+  ],
+  "matched_pairs": [
+    {
+      "size": "~500",
+      "mean_direct_minus_residual_db": -0.18748638619167846,
+      "median_direct_minus_residual_db": -0.15892657893840934,
+      "image_seed_comparisons": 24
+    },
+    {
+      "size": "~650",
+      "mean_direct_minus_residual_db": -0.14934333082651122,
+      "median_direct_minus_residual_db": -0.11142498291172842,
+      "image_seed_comparisons": 24
+    }
+  ],
+  "per_image": [
+    {
+      "path": "DSCN0940.JPG",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 30.60003981384797,
+      "bicubic_psnr_db": 31.683690109047383,
+      "model_psnr_db": {
+        "residual16_seed42": 31.6788489650884,
+        "direct12_seed42": 31.64068025003469,
+        "residual21_seed42": 31.68411161619424,
+        "direct16_seed42": 31.636145730989647,
+        "residual16_seed43": 31.674843524816133,
+        "direct12_seed43": 31.630020864564084,
+        "residual21_seed43": 31.65750836361736,
+        "direct16_seed43": 31.628815982096064
+      }
+    },
+    {
+      "path": "IMG00034.JPG",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 33.541013748560104,
+      "bicubic_psnr_db": 33.76653987896389,
+      "model_psnr_db": {
+        "residual16_seed42": 33.76638725030725,
+        "direct12_seed42": 33.72454555158372,
+        "residual21_seed42": 33.766359353198816,
+        "direct16_seed42": 33.72179586402068,
+        "residual16_seed43": 33.764599367547284,
+        "direct12_seed43": 33.71887035362623,
+        "residual21_seed43": 33.73194620619221,
+        "direct16_seed43": 33.731220652295846
+      }
+    },
+    {
+      "path": "IMG_3958.JPG",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 35.44477245213542,
+      "bicubic_psnr_db": 38.30135763579053,
+      "model_psnr_db": {
+        "residual16_seed42": 38.52882287439379,
+        "direct12_seed42": 38.0003749645911,
+        "residual21_seed42": 38.52742560827303,
+        "direct16_seed42": 38.00744220931819,
+        "residual16_seed43": 38.45070845729715,
+        "direct12_seed43": 37.97219753754091,
+        "residual21_seed43": 38.37936300212733,
+        "direct16_seed43": 38.02493632784553
+      }
+    },
+    {
+      "path": "IMG_8181.jpeg",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 29.90695008496402,
+      "bicubic_psnr_db": 31.426388226962043,
+      "model_psnr_db": {
+        "residual16_seed42": 31.54662043153848,
+        "direct12_seed42": 31.383321053564302,
+        "residual21_seed42": 31.526404634141677,
+        "direct16_seed42": 31.413197550720312,
+        "residual16_seed43": 31.518984354717922,
+        "direct12_seed43": 31.383048376801305,
+        "residual21_seed43": 31.53399381911989,
+        "direct16_seed43": 31.38161135536713
+      }
+    },
+    {
+      "path": "IMG_8547.jpeg",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 38.1375964262223,
+      "bicubic_psnr_db": 38.37509516837573,
+      "model_psnr_db": {
+        "residual16_seed42": 38.46189847695652,
+        "direct12_seed42": 38.20442278009571,
+        "residual21_seed42": 38.46893198064742,
+        "direct16_seed42": 38.1294464296066,
+        "residual16_seed43": 38.434743036020784,
+        "direct12_seed43": 38.44055765218855,
+        "residual21_seed43": 38.36989842551043,
+        "direct16_seed43": 38.440814454705034
+      }
+    },
+    {
+      "path": "Snapshot_202305140_180500.jpg",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 25.385462449350374,
+      "bicubic_psnr_db": 25.85516568476891,
+      "model_psnr_db": {
+        "residual16_seed42": 25.903770013420658,
+        "direct12_seed42": 25.879516380178273,
+        "residual21_seed42": 25.907048511045375,
+        "direct16_seed42": 25.88145740814708,
+        "residual16_seed43": 25.904380309817405,
+        "direct12_seed43": 25.8767209261949,
+        "residual21_seed43": 25.910314946317555,
+        "direct16_seed43": 25.87862509788039
+      }
+    },
+    {
+      "path": "_45A4359.JPG",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 42.50600352110081,
+      "bicubic_psnr_db": 42.67623226294319,
+      "model_psnr_db": {
+        "residual16_seed42": 42.680444618014604,
+        "direct12_seed42": 42.60585621089525,
+        "residual21_seed42": 42.68575009659251,
+        "direct16_seed42": 42.576107214190415,
+        "residual16_seed43": 42.67223768480412,
+        "direct12_seed43": 42.5311047845969,
+        "residual21_seed43": 42.6552018174467,
+        "direct16_seed43": 42.57350136640245
+      }
+    },
+    {
+      "path": "_45A4452.JPG",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 40.927567857725776,
+      "bicubic_psnr_db": 42.14805537734448,
+      "model_psnr_db": {
+        "residual16_seed42": 42.14799827823786,
+        "direct12_seed42": 41.874561849556784,
+        "residual21_seed42": 42.14709732586413,
+        "direct16_seed42": 41.819986572825556,
+        "residual16_seed43": 42.14280818148139,
+        "direct12_seed43": 41.712074079399,
+        "residual21_seed43": 42.02402001507532,
+        "direct16_seed43": 41.75439477881206
+      }
+    },
+    {
+      "path": "_45A4959.JPG",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 42.462120731421564,
+      "bicubic_psnr_db": 42.71455632995369,
+      "model_psnr_db": {
+        "residual16_seed42": 42.72422540815504,
+        "direct12_seed42": 42.598130269851325,
+        "residual21_seed42": 42.723134633871275,
+        "direct16_seed42": 42.554378781170755,
+        "residual16_seed43": 42.72384217489348,
+        "direct12_seed43": 42.5093621654803,
+        "residual21_seed43": 42.635702878731735,
+        "direct16_seed43": 42.53481020489389
+      }
+    },
+    {
+      "path": "_45A4960.JPG",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 39.41738629437454,
+      "bicubic_psnr_db": 40.564530265573644,
+      "model_psnr_db": {
+        "residual16_seed42": 40.59099081378964,
+        "direct12_seed42": 40.43306711676665,
+        "residual21_seed42": 40.59169828967175,
+        "direct16_seed42": 40.445026464183144,
+        "residual16_seed43": 40.56479527395747,
+        "direct12_seed43": 40.40486581310364,
+        "residual21_seed43": 40.56318709587491,
+        "direct16_seed43": 40.4614140226347
+      }
+    },
+    {
+      "path": "_MG_7017.JPG",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 34.2305350981518,
+      "bicubic_psnr_db": 34.92267144952679,
+      "model_psnr_db": {
+        "residual16_seed42": 34.892152966122424,
+        "direct12_seed42": 34.66198419768843,
+        "residual21_seed42": 34.665972926105766,
+        "direct16_seed42": 34.65177269152847,
+        "residual16_seed43": 34.74286390927722,
+        "direct12_seed43": 34.2753835115277,
+        "residual21_seed43": 34.69734823990359,
+        "direct16_seed43": 34.409730292267746
+      }
+    },
+    {
+      "path": "_MG_8840.JPG",
+      "width": 512,
+      "height": 512,
+      "nearest_psnr_db": 35.24877899690857,
+      "bicubic_psnr_db": 37.17062392312051,
+      "model_psnr_db": {
+        "residual16_seed42": 37.3193828532395,
+        "direct12_seed42": 37.11137448792864,
+        "residual21_seed42": 37.316207397133255,
+        "direct16_seed42": 37.128035829313234,
+        "residual16_seed43": 37.29504928801591,
+        "direct12_seed43": 37.05968406555174,
+        "residual21_seed43": 37.324302202612735,
+        "direct16_seed43": 37.1240221642178
+      }
+    }
+  ]
+}

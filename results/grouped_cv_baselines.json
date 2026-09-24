@@ -1,0 +1,37 @@
+{
+  "images": 174,
+  "nearest_mean_image_psnr_db": 33.664071400834096,
+  "bicubic_mean_image_psnr_db": 35.333433419559064,
+  "folds": [
+    {
+      "fold": 0,
+      "images": 35,
+      "nearest_psnr_db": 32.19004707251145,
+      "bicubic_psnr_db": 34.128157042934376
+    },
+    {
+      "fold": 1,
+      "images": 35,
+      "nearest_psnr_db": 31.288070112877353,
+      "bicubic_psnr_db": 33.04910561350479
+    },
+    {
+      "fold": 2,
+      "images": 35,
+      "nearest_psnr_db": 29.148213118258628,
+      "bicubic_psnr_db": 30.50689254219983
+    },
+    {
+      "fold": 3,
+      "images": 35,
+      "nearest_psnr_db": 28.985210864140186,
+      "bicubic_psnr_db": 30.694926538394874
+    },
+    {
+      "fold": 4,
+      "images": 34,
+      "nearest_psnr_db": 30.809263211041813,
+      "bicubic_psnr_db": 32.275814723593285
+    }
+  ]
+}

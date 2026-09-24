@@ -1,0 +1,51 @@
+{
+  "note": "Pooled PSNR uses the combined RGB pixel MSE across final central crops.",
+  "pooled_psnr_db": {
+    "nearest": 32.56232442150036,
+    "bicubic": 33.40469048761208
+  },
+  "models": [
+    {
+      "kind": "residual",
+      "hidden": 16,
+      "pooled_psnr_db": 33.44641582747164,
+      "mean_image_psnr_db": 36.67214160466293,
+      "image_seed_beats_bicubic": 15
+    },
+    {
+      "kind": "direct",
+      "hidden": 12,
+      "pooled_psnr_db": 33.34985591754873,
+      "mean_image_psnr_db": 36.484655218471254,
+      "image_seed_beats_bicubic": 3
+    },
+    {
+      "kind": "residual",
+      "hidden": 21,
+      "pooled_psnr_db": 33.43541405555887,
+      "mean_image_psnr_db": 36.645538724386206,
+      "image_seed_beats_bicubic": 13
+    },
+    {
+      "kind": "direct",
+      "hidden": 16,
+      "pooled_psnr_db": 33.35848693328347,
+      "mean_image_psnr_db": 36.496195393559695,
+      "image_seed_beats_bicubic": 3
+    }
+  ],
+  "paired_wins": [
+    {
+      "size": "~500",
+      "direct_better_image_seed_count": 1,
+      "comparisons": 24,
+      "mean_direct_minus_residual_db": -0.18748638619167846
+    },
+    {
+      "size": "~650",
+      "direct_better_image_seed_count": 1,
+      "comparisons": 24,
+      "mean_direct_minus_residual_db": -0.14934333082651122
+    }
+  ]
+}
