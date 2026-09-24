@@ -1,3 +1,4 @@
+use quant_search_exp::direct::{DirectModel, evaluate as evaluate_direct, train as train_direct};
 use quant_search_exp::evaluation::{ReportOptions, evaluate_report, verify_manifest_data};
 use quant_search_exp::experiments::{search_uniform_fp6, select_mixed_fp6};
 use quant_search_exp::fp6::{Fp6Format, Fp6Model};
@@ -8,7 +9,7 @@ use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant};
 
 fn usage() -> &'static str {
-    "Usage:\n  quant-search-exp train <high_res_dir> <model.qsr> [epochs=8] [samples_per_epoch=20000] [jpeg_quality=70] [seed=42] [learning_rate=0.001]\n  quant-search-exp eval <model.qsr> <held_out_dir> [jpeg_quality=70]\n  quant-search-exp quantize-int8 <model.qsr> <model.qi8>\n  quant-search-exp quantize-fp6 <model.qsr> <model.qsf> <e3m2|e2m3>\n  quant-search-exp select-mixed-fp6 <model.qsr> <manifest.json> <data_root> <output.qsf> <record.json> [quality=70]\n  quant-search-exp search-fp6 <model.qsr> <manifest.json> <data_root> <output.qsf> <record.json> <e3m2|e2m3> [quality=70]\n  quant-search-exp verify-data <manifest.json> <data_root>\n  quant-search-exp eval-report <manifest.json> <data_root> <val|test|final> <output.json> <model_file> [more_model_files...] [--quality N] [--runs N] [--exclude-manifest path]\n  quant-search-exp upscale <model_file> <input.jpg> <output.jpg>\n  quant-search-exp bench <model.qsr> <input.jpg> [runs=5]"
+    "Usage:\n  quant-search-exp train <high_res_dir> <model.qsr> [epochs=8] [samples_per_epoch=20000] [jpeg_quality=70] [seed=42] [learning_rate=0.001]\n  quant-search-exp train-direct <high_res_dir> <model.qsd> [epochs=8] [samples_per_epoch=20000] [jpeg_quality=70] [seed=42] [learning_rate=0.001]\n  quant-search-exp eval <model.qsr> <held_out_dir> [jpeg_quality=70]\n  quant-search-exp eval-direct <model.qsd> <held_out_dir> [jpeg_quality=70]\n  quant-search-exp eval-direct-report <model.qsd> <held_out_dir> <output.json> [jpeg_quality=70]\n  quant-search-exp quantize-int8 <model.qsr> <model.qi8>\n  quant-search-exp quantize-fp6 <model.qsr> <model.qsf> <e3m2|e2m3>\n  quant-search-exp select-mixed-fp6 <model.qsr> <manifest.json> <data_root> <output.qsf> <record.json> [quality=70]\n  quant-search-exp search-fp6 <model.qsr> <manifest.json> <data_root> <output.qsf> <record.json> <e3m2|e2m3> [quality=70]\n  quant-search-exp verify-data <manifest.json> <data_root>\n  quant-search-exp eval-report <manifest.json> <data_root> <val|test|final> <output.json> <model_file> [more_model_files...] [--quality N] [--runs N] [--exclude-manifest path]\n  quant-search-exp upscale <model_file> <input.jpg> <output.jpg>\n  quant-search-exp upscale-direct <model.qsd> <input.jpg> <output.jpg>\n  quant-search-exp bench <model.qsr> <input.jpg> [runs=5]"
 }
 
 fn parse_fp6_format(value: &str) -> Result<Fp6Format> {
@@ -132,6 +133,15 @@ fn run() -> Result<()> {
                 learning_rate,
             )
         }
+        Some("train-direct") if (4..=9).contains(&args.len()) => train_direct(
+            Path::new(&args[2]),
+            Path::new(&args[3]),
+            optional(&args, 4, 8)?,
+            optional(&args, 5, 20_000)?,
+            optional(&args, 6, 70_u8)?,
+            optional(&args, 7, 42_u64)?,
+            optional(&args, 8, 0.001_f32)?,
+        ),
         Some("eval") if (4..=5).contains(&args.len()) => {
             let model = Model::load_fp16(Path::new(&args[2]))?;
             let quality = optional(&args, 4, 70_u8)?;
@@ -143,6 +153,32 @@ fn run() -> Result<()> {
                 metrics.model_psnr,
                 metrics.model_psnr - metrics.baseline_psnr
             );
+            Ok(())
+        }
+        Some("eval-direct") if (4..=5).contains(&args.len()) => {
+            let report = evaluate_direct(
+                Path::new(&args[2]),
+                Path::new(&args[3]),
+                optional(&args, 4, 70_u8)?,
+            )?;
+            println!(
+                "{} images; nearest {:.3} dB; bicubic {:.3} dB; direct {:.3} dB; vs bicubic {:+.3} dB",
+                report.summary.images,
+                report.summary.nearest_psnr_db,
+                report.summary.bicubic_psnr_db,
+                report.summary.direct_psnr_db,
+                report.summary.direct_psnr_db - report.summary.bicubic_psnr_db,
+            );
+            Ok(())
+        }
+        Some("eval-direct-report") if (5..=6).contains(&args.len()) => {
+            let report = evaluate_direct(
+                Path::new(&args[2]),
+                Path::new(&args[3]),
+                optional(&args, 5, 70_u8)?,
+            )?;
+            std::fs::write(&args[4], serde_json::to_vec_pretty(&report)?)?;
+            println!("saved {}", args[4]);
             Ok(())
         }
         Some("quantize-int8") if args.len() == 4 => {
@@ -197,6 +233,14 @@ fn run() -> Result<()> {
         Some("upscale") if args.len() == 5 => {
             let (model, _) = InferenceModel::load(Path::new(&args[2]))?;
             upscale(&model, Path::new(&args[3]), Path::new(&args[4]))?;
+            println!("saved {}", args[4]);
+            Ok(())
+        }
+        Some("upscale-direct") if args.len() == 5 => {
+            let model = DirectModel::load_fp16(Path::new(&args[2]))?;
+            model
+                .upscale(&load_rgb(Path::new(&args[3]))?)?
+                .save(&args[4])?;
             println!("saved {}", args[4]);
             Ok(())
         }

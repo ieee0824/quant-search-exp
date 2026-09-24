@@ -6,6 +6,7 @@ use std::fs::{self, File};
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 
+pub mod direct;
 pub mod evaluation;
 pub mod experiments;
 pub mod fp6;

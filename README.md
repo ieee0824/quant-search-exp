@@ -124,10 +124,29 @@ python3 scripts/summarize_results.py results/fp6_uniform_val.json results/fp6_mi
 
 | モデル | ファイル | 検証用PSNR | 別画像4枚のPSNR* |
 | --- | ---: | ---: | ---: |
+| nearest neighbor補間 | モデルなし | 32.513 dB | 29.722 dB |
+| bicubic補間 | モデルなし | 34.355 dB | 31.151 dB |
 | FP16 | 1006byte | 34.447 dB | 31.382 dB |
+| 直接生成FP16（8 epoch、seed 42） | 1312byte | 34.335 dB | 31.173 dB |
+| 直接生成FP16（64 epoch、seed 42） | 1312byte | 34.381 dB | 31.278 dB |
 | 一律E3M2 | 431byte | 34.398 dB | 31.373 dB |
 | 一律E2M3 | 431byte | 34.437 dB | 31.379 dB |
 | 混合E3M2/E2M3 | 431byte | 34.447 dB | 31.390 dB |
 | 一律E2M3・探索後 | 431byte | 34.468 dB | 31.361 dB |
 
 * 別画像4枚は候補選択には使っていないが、初期の学習条件を調べた際に見ているため**盲検の最終評価ではない**。探索後モデルは検証用で改善した一方、別画像では一律E2M3より低下した。探索による汎化性能の改善は確認できていない。速度は各レポートに処理別で記録しており、CPUでの小さな差をFP6の高速化とは解釈しない。
+
+補間方式の比較は、両方式とも同じ中央cropと品質70の合成低解像度JPEGを入力に使い、RGB画素の平均二乗誤差からPSNRを計算した。bicubicはnearest neighborより検証で+1.842 dB、別画像で+1.429 dB。DNNはbicubicを基準に補正するため、DNN単体の改善を見る際はbicubicとの差を使う。画像別の値は `results/interpolation_baselines.json` に保存した。再現コマンドは `cargo run --release --example compare_interpolation data/val data/test > results/interpolation_baselines.json`。
+
+## 低解像度画像から直接2倍生成
+
+`train-direct` は低解像度の3×3 RGB近傍から高解像度の2×2 RGBブロックを直接出す。隠れ層16ユニット、652パラメータ、FP16モデルは1,312 byte。`data/direct_fp16_baseline.qsd` は元の学習画像18枚・64 epoch・seed 42で作成したモデル。既存の補正型DNNはバイキュービック拡大画像にRGB補正を足すが、このモデルの推論では補間済み画像を使わない。
+
+```sh
+cargo run --release -- train-direct data/train /private/tmp/direct.qsd 64 200000 70 42 0.0003
+cargo run --release -- eval-direct data/direct_fp16_baseline.qsd data/val 70
+cargo run --release -- eval-direct-report data/direct_fp16_baseline.qsd data/test /private/tmp/direct-test.json 70
+cargo run --release -- upscale-direct data/direct_fp16_baseline.qsd low_res.jpg output_2x.jpg
+```
+
+3 seedの比較では、元の18枚・64 epochの直接生成モデルは検証34.378 dB、評価31.292 dBで、同条件の補正型FP16は34.357 dB、31.438 dB。追加131枚を含む64 epochでは直接生成34.354 dB、31.214 dB、補正型34.354 dB、31.401 dB。直接生成は検証で同等だが、評価では補正型より低い。各seed・画像別の値と比較条件は [`results/direct_comparison.md`](results/direct_comparison.md) に記録した。直接生成モデルのFP6化と推論時間の比較は未実施。
