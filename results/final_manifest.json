@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "role": "unused final holdout",
+  "images": [
+    {
+      "path": "data/final_inbox/DSCN0940.JPG",
+      "sha256": "abd340cab4cd903247c604d310b7fcd293d2a12675100ad156ca34cf28ce0cfe",
+      "bytes": 1945321
+    },
+    {
+      "path": "data/final_inbox/IMG00034.JPG",
+      "sha256": "ab7a09e3151b8ee2e05c2a1980b695d3cc1894a2aca51eab1564507d64e9dbe7",
+      "bytes": 5045619
+    },
+    {
+      "path": "data/final_inbox/IMG_3958.JPG",
+      "sha256": "51f5133c5b7d6461981e37990dd6cde51ca8e6f69c324cb1047b945fe4dcfb64",
+      "bytes": 357051
+    },
+    {
+      "path": "data/final_inbox/IMG_8181.jpeg",
+      "sha256": "1ac7f125cce3bb69567085a215a263ed83881741fd8930cb5915f14c8604e6e1",
+      "bytes": 3422879
+    },
+    {
+      "path": "data/final_inbox/IMG_8547.jpeg",
+      "sha256": "0251820a1cc3c458cfc1d8a3b22ee06f373928947a825eae986fb1bb8c8a8002",
+      "bytes": 2933446
+    },
+    {
+      "path": "data/final_inbox/Snapshot_202305140_180500.jpg",
+      "sha256": "f2c5dd2cf1ac44bb8e9b8b00ab74e921b77940eddaa1c8586da43a9b7c5dcca7",
+      "bytes": 6968963
+    },
+    {
+      "path": "data/final_inbox/_45A4359.JPG",
+      "sha256": "21be0a208e29b428e2a2596ae8783fb609d8b71d43cd711b6c62fc306c6c9292",
+      "bytes": 4058293
+    },
+    {
+      "path": "data/final_inbox/_45A4452.JPG",
+      "sha256": "5b08919eb8d19fa09f0d2eaf995e5b48ab15a39161132c9fd49404601b914912",
+      "bytes": 4330491
+    },
+    {
+      "path": "data/final_inbox/_45A4959.JPG",
+      "sha256": "abba1eab8e3a1ebce4e2b9d7b2a51d1539d0db67238380a1549e2687e72fec6f",
+      "bytes": 4641176
+    },
+    {
+      "path": "data/final_inbox/_45A4960.JPG",
+      "sha256": "dda7fc09e68c895a6d031697c5f34c0f21770e7bc723d734d3cba3365591c6d0",
+      "bytes": 5317618
+    },
+    {
+      "path": "data/final_inbox/_MG_7017.JPG",
+      "sha256": "c7ce058960b5d3367e0b2e3ce4283e947e37e4fe05335215e582811180fee807",
+      "bytes": 17312582
+    },
+    {
+      "path": "data/final_inbox/_MG_8840.JPG",
+      "sha256": "dde237ac268dfa621c0f290a36e1976aacce4ae0be372285051178ba3842b2cb",
+      "bytes": 19490763
+    }
+  ]
+}

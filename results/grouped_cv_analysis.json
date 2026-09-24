@@ -1,0 +1,56 @@
+{
+  "baseline_pooled_psnr_db": {
+    "nearest": 30.305743555854335,
+    "bicubic": 31.914306291421997
+  },
+  "models": [
+    {
+      "kind": "residual",
+      "hidden": 16,
+      "pooled_psnr_db": 32.12800890869561,
+      "mean_image_psnr_db": 35.45472835373129
+    },
+    {
+      "kind": "direct",
+      "hidden": 12,
+      "pooled_psnr_db": 31.931308593444975,
+      "mean_image_psnr_db": 35.125453575067645
+    },
+    {
+      "kind": "residual",
+      "hidden": 21,
+      "pooled_psnr_db": 32.14316247675188,
+      "mean_image_psnr_db": 35.46942465501157
+    },
+    {
+      "kind": "direct",
+      "hidden": 16,
+      "pooled_psnr_db": 31.94289406253374,
+      "mean_image_psnr_db": 35.14871825015595
+    }
+  ],
+  "matched_pairs": [
+    {
+      "size": "~500",
+      "mean_direct_minus_residual_db": -0.329274778663646,
+      "bootstrap_group_95pct_db": [
+        -0.39465219084617187,
+        -0.2723217472876318
+      ],
+      "capture_groups": 26,
+      "groups_direct_better": 0,
+      "image_seed_comparisons": 348
+    },
+    {
+      "size": "~650",
+      "mean_direct_minus_residual_db": -0.3207064048556166,
+      "bootstrap_group_95pct_db": [
+        -0.3943223388510777,
+        -0.25622404621932393
+      ],
+      "capture_groups": 26,
+      "groups_direct_better": 0,
+      "image_seed_comparisons": 348
+    }
+  ]
+}

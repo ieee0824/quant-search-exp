@@ -1,0 +1,67 @@
+{
+  "crop": "center; at most 512x512; even dimensions; synthetic 2x JPEG input",
+  "jpeg_quality": 70,
+  "psnr": "RGB pixel-weighted MSE",
+  "splits": [
+    {
+      "directory": "data/val",
+      "images": [
+        {
+          "bicubic_psnr_db": 38.9474786514773,
+          "nearest_psnr_db": 38.88027374558484,
+          "path": "data/val/05_IMG_7226_hu_e492cbc52c05b084.JPG"
+        },
+        {
+          "bicubic_psnr_db": 29.772032710845163,
+          "nearest_psnr_db": 27.936705396919056,
+          "path": "data/val/11_IMG_9434_hu_3fc2b870b13a87f3.jpg"
+        },
+        {
+          "bicubic_psnr_db": 38.195108970319325,
+          "nearest_psnr_db": 34.63601066556074,
+          "path": "data/val/17_DSCF3471_hu_c262cc22f34f35cd.jpg"
+        },
+        {
+          "bicubic_psnr_db": 38.70994434057722,
+          "nearest_psnr_db": 37.92816117839179,
+          "path": "data/val/23_IMG_5671_hu_6cadf1345ab68d43.jpg"
+        }
+      ],
+      "summary": {
+        "bicubic_psnr_db": 34.355019437405964,
+        "image_count": 4,
+        "nearest_psnr_db": 32.51312310857065
+      }
+    },
+    {
+      "directory": "data/test",
+      "images": [
+        {
+          "bicubic_psnr_db": 37.8106327340157,
+          "nearest_psnr_db": 36.60388116858031,
+          "path": "data/test/06_545A0194_hu_7fb6c09e0567f66b.jpg"
+        },
+        {
+          "bicubic_psnr_db": 32.46528498617002,
+          "nearest_psnr_db": 32.31012030771748,
+          "path": "data/test/12_IMG_2485_hu_8d2fe7545e781763.jpg"
+        },
+        {
+          "bicubic_psnr_db": 26.575050480301485,
+          "nearest_psnr_db": 24.89681370312421,
+          "path": "data/test/18_IMG_6638_hu_263c54e9af5c59e0.jpg"
+        },
+        {
+          "bicubic_psnr_db": 38.66807476508705,
+          "nearest_psnr_db": 36.57070950310966,
+          "path": "data/test/24_IMG_7187_hu_80e8925285f1ffe4.jpg"
+        }
+      ],
+      "summary": {
+        "bicubic_psnr_db": 31.151105179317867,
+        "image_count": 4,
+        "nearest_psnr_db": 29.72179445248568
+      }
+    }
+  ]
+}
