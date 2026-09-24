@@ -198,6 +198,60 @@ impl Model {
         }
         Ok(Self { weights })
     }
+
+    /// A small, uniform INT8 baseline used to exercise the shared evaluator.
+    /// QSI1 stores a single FP32 scale followed by one signed byte per parameter.
+    pub fn save_int8(&self, path: &Path) -> Result<()> {
+        if self.weights.iter().any(|weight| !weight.is_finite()) {
+            return Err("model contains a non-finite weight".into());
+        }
+        let max_abs = self
+            .weights
+            .iter()
+            .fold(0.0_f32, |max, value| max.max(value.abs()));
+        let scale = if max_abs == 0.0 { 1.0 } else { max_abs / 127.0 };
+        if !scale.is_finite() || scale <= 0.0 {
+            return Err("INT8 scale is not finite and positive".into());
+        }
+        let mut file = File::create(path)?;
+        file.write_all(b"QSI1")?;
+        file.write_all(&(PARAMS as u32).to_le_bytes())?;
+        file.write_all(&scale.to_le_bytes())?;
+        for &weight in &self.weights {
+            let quantized = (weight / scale).round().clamp(-127.0, 127.0) as i8;
+            file.write_all(&[quantized as u8])?;
+        }
+        Ok(())
+    }
+
+    pub fn load_int8(path: &Path) -> Result<Self> {
+        let bytes = fs::read(path)?;
+        if bytes.len() != 12 + PARAMS || &bytes[..4] != b"QSI1" {
+            return Err("invalid QSI1 model file".into());
+        }
+        if u32::from_le_bytes(bytes[4..8].try_into()?) as usize != PARAMS {
+            return Err("model architecture does not match this program".into());
+        }
+        let scale = f32::from_le_bytes(bytes[8..12].try_into()?);
+        if !scale.is_finite() || scale <= 0.0 {
+            return Err("invalid QSI1 scale".into());
+        }
+        let mut weights = [0.0; PARAMS];
+        for (index, weight) in weights.iter_mut().enumerate() {
+            *weight = (bytes[12 + index] as i8 as f32) * scale;
+        }
+        Ok(Self { weights })
+    }
+
+    pub fn load_for_evaluation(path: &Path) -> Result<(Self, &'static str)> {
+        let mut magic = [0_u8; 4];
+        File::open(path)?.read_exact(&mut magic)?;
+        match &magic {
+            b"QSR1" => Ok((Self::load_fp16(path)?, "QSR1-FP16")),
+            b"QSI1" => Ok((Self::load_int8(path)?, "QSI1-INT8")),
+            _ => Err("unsupported model format".into()),
+        }
+    }
 }
 
 fn neighborhood(image: &RgbImage, x: u32, y: u32) -> [f32; INPUTS] {
@@ -518,6 +572,26 @@ mod tests {
         }
         let image = RgbImage::from_pixel(2, 2, Rgb([100, 120, 140]));
         assert_eq!(model.enhance(&image), loaded.enhance(&image));
+    }
+
+    #[test]
+    fn int8_model_is_smaller_and_loads_through_shared_evaluator() {
+        let path =
+            std::env::temp_dir().join(format!("quant-search-exp-{}-int8.qi8", std::process::id()));
+        let model = Model::new(42);
+        model.save_int8(&path).unwrap();
+        assert_eq!(fs::metadata(&path).unwrap().len(), (12 + PARAMS) as u64);
+        let (restored, format) = Model::load_for_evaluation(&path).unwrap();
+        assert_eq!(format, "QSI1-INT8");
+        let max_abs = model
+            .weights
+            .iter()
+            .fold(0.0_f32, |max, x| max.max(x.abs()));
+        let max_error = max_abs / 127.0 / 2.0 + 1e-6;
+        for (before, after) in model.weights.iter().zip(restored.weights.iter()) {
+            assert!((before - after).abs() <= max_error);
+        }
+        fs::remove_file(path).unwrap();
     }
 
     #[test]

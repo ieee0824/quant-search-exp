@@ -49,6 +49,7 @@ struct ModelIdentity {
     format: String,
     sha256: String,
     bytes: u64,
+    load_decode_ms: f64,
 }
 
 #[derive(Serialize)]
@@ -337,12 +338,15 @@ pub fn evaluate_report(
     let mut identities = Vec::new();
     for path in model_paths {
         let (sha256, bytes) = digest_file(path)?;
-        let model = Model::load_fp16(path)?;
+        let start = Instant::now();
+        let (model, format) = Model::load_for_evaluation(path)?;
+        let load_decode_ms = start.elapsed().as_secs_f64() * 1_000.0;
         identities.push(ModelIdentity {
             path: path.display().to_string(),
-            format: "QSR1-FP16".into(),
+            format: format.into(),
             sha256,
             bytes,
+            load_decode_ms,
         });
         models.push(model);
     }
@@ -549,12 +553,17 @@ mod tests {
         let data = root.join("data");
         let verified = verify_manifest_data(&manifest, &data).unwrap();
         assert_eq!(verified.val, 1);
+        let int8_path = root.join("model.qi8");
+        Model::load_fp16(&model)
+            .unwrap()
+            .save_int8(&int8_path)
+            .unwrap();
         evaluate_report(
             &manifest,
             &data,
             "val",
             &report,
-            &[model.clone(), model.clone()],
+            &[model.clone(), int8_path],
             ReportOptions {
                 quality: 70,
                 runs: 1,
@@ -570,6 +579,8 @@ mod tests {
         assert_eq!(value["images"].as_array().unwrap().len(), 1);
         assert_eq!(value["images"][0]["models"].as_array().unwrap().len(), 2);
         assert_eq!(value["models"][0]["bytes"], 1006);
+        assert_eq!(value["models"][1]["bytes"], 511);
+        assert_eq!(value["models"][1]["format"], "QSI1-INT8");
         let image = data.join("val/01_sample.jpg");
         let mut bytes = fs::read(&image).unwrap();
         bytes[10] ^= 1;

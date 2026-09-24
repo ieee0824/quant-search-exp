@@ -3,3 +3,4 @@
 /data/*
 !/data/gallery_manifest.json
 !/data/gallery_fp16_selected.qsr
+!/data/gallery_int8_baseline.qi8

@@ -39,7 +39,14 @@
       "format": "QSR1-FP16",
       "sha256": "23fa6e800b7fb1cc76f7d790bdb61c338d81ce66f588cfe0978c60c7bff57916",
       "bytes": 1006,
-      "load_decode_ms": 0.29133400000000004
+      "load_decode_ms": 0.32537499999999997
+    },
+    {
+      "path": "data/gallery_int8_baseline.qi8",
+      "format": "QSI1-INT8",
+      "sha256": "790251883d97be047f74f344dba8a4dbbac62d3af2836176bb8f1005febf2afb",
+      "bytes": 511,
+      "load_decode_ms": 0.187709
     }
   ],
   "images": [
@@ -49,14 +56,20 @@
       "width": 512,
       "height": 512,
       "baseline_psnr_db": 38.947478651455526,
-      "source_read_decode_ms": 112.60308300000001,
-      "synthetic_pair_ms": 7.4951669999999995,
+      "source_read_decode_ms": 107.75520900000001,
+      "synthetic_pair_ms": 7.221583,
       "models": [
         {
           "model_index": 0,
           "psnr_db": 38.93960127763648,
-          "inference_ms": 11.815333666666666,
-          "output_jpeg_encode_ms": 1.889
+          "inference_ms": 11.911208666666667,
+          "output_jpeg_encode_ms": 1.9544160000000002
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 38.9457594594521,
+          "inference_ms": 11.977361333333333,
+          "output_jpeg_encode_ms": 1.8919169999999998
         }
       ]
     },
@@ -66,14 +79,20 @@
       "width": 512,
       "height": 512,
       "baseline_psnr_db": 29.772032710865467,
-      "source_read_decode_ms": 306.545709,
-      "synthetic_pair_ms": 7.763084,
+      "source_read_decode_ms": 315.899125,
+      "synthetic_pair_ms": 7.984916999999999,
       "models": [
         {
           "model_index": 0,
           "psnr_db": 29.800462340205858,
-          "inference_ms": 12.05625,
-          "output_jpeg_encode_ms": 3.2411250000000003
+          "inference_ms": 12.109833333333334,
+          "output_jpeg_encode_ms": 3.060875
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 29.794998861456946,
+          "inference_ms": 12.332208333333334,
+          "output_jpeg_encode_ms": 2.907584
         }
       ]
     },
@@ -83,14 +102,20 @@
       "width": 512,
       "height": 512,
       "baseline_psnr_db": 38.195108970274504,
-      "source_read_decode_ms": 47.236417,
-      "synthetic_pair_ms": 6.847375,
+      "source_read_decode_ms": 45.071583,
+      "synthetic_pair_ms": 7.327209000000001,
       "models": [
         {
           "model_index": 0,
           "psnr_db": 38.93855625226141,
-          "inference_ms": 11.958555666666667,
-          "output_jpeg_encode_ms": 1.913
+          "inference_ms": 12.059944000000002,
+          "output_jpeg_encode_ms": 1.91425
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 38.945119933792874,
+          "inference_ms": 11.887291666666668,
+          "output_jpeg_encode_ms": 1.978667
         }
       ]
     },
@@ -100,14 +125,20 @@
       "width": 512,
       "height": 512,
       "baseline_psnr_db": 38.709944340565144,
-      "source_read_decode_ms": 90.61779200000001,
-      "synthetic_pair_ms": 7.117542,
+      "source_read_decode_ms": 91.00274999999999,
+      "synthetic_pair_ms": 7.016,
       "models": [
         {
           "model_index": 0,
           "psnr_db": 38.71556650362053,
-          "inference_ms": 11.887902666666667,
-          "output_jpeg_encode_ms": 2.025584
+          "inference_ms": 11.883722,
+          "output_jpeg_encode_ms": 2.0543750000000003
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 38.71805219753634,
+          "inference_ms": 11.777930666666668,
+          "output_jpeg_encode_ms": 2.051916
         }
       ]
     }
@@ -120,8 +151,14 @@
       {
         "model_index": 0,
         "psnr_db": 34.44671941186475,
-        "mean_inference_ms_per_image": 11.929510500000001,
-        "mean_output_jpeg_encode_ms_per_image": 2.26717725
+        "mean_inference_ms_per_image": 11.991177,
+        "mean_output_jpeg_encode_ms_per_image": 2.245979
+      },
+      {
+        "model_index": 1,
+        "psnr_db": 34.44409841651301,
+        "mean_inference_ms_per_image": 11.993698000000002,
+        "mean_output_jpeg_encode_ms_per_image": 2.207521
       }
     ]
   }

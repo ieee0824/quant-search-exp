@@ -7,6 +7,7 @@
 - 高解像度のJPEG/PNG画像から、2分の1へ縮小してJPEG圧縮した画像を生成し、元画像を教師として学習する。
 - 低解像度JPEGをbicubicで2倍に拡大し、周囲3×3画素のRGB値を入力とする27→16→3のDNNで各画素の残差を補正する。
 - 重み499個をFP16で保存する。学習と推論の計算はFP32で行うため、FP16演算の高速化を示すものではない。
+- 比較器の確認用に、全重みを一つの共有scaleでINT8へ丸める小さな`QSI1`形式も使える。INT8専用演算の速度を示すものではない。
 - 未使用画像でbicubicとDNNのPSNRを比較する。
 - 学習済みモデルを使ってJPEG画像を2倍に拡大し、品質95のJPEGとして保存する。
 - ARM64でNEONが有効な場合は、推論時のDNNの積和計算にSIMDを使う。それ以外の環境ではスカラー処理を使う。
@@ -55,11 +56,15 @@ cargo run --release -- verify-data data/gallery_manifest.json data
 ```sh
 cargo run --release -- eval-report data/gallery_manifest.json data val results/fp16_val.json data/gallery_fp16_selected.qsr --runs 3
 cargo run --release -- eval-report data/gallery_manifest.json data test results/fp16_test_exploratory.json data/gallery_fp16_selected.qsr --runs 3
+cargo run --release -- quantize-int8 data/gallery_fp16_selected.qsr data/gallery_int8_baseline.qi8
+cargo run --release -- eval-report data/gallery_manifest.json data val results/fp16_int8_val.json data/gallery_fp16_selected.qsr data/gallery_int8_baseline.qi8 --runs 3
 ```
 
-同じコマンドで複数のモデルパスを渡せる。現時点で読み込める形式は`QSR1`のFP16モデルで、後続の量子化形式はモデル読込器へ追加する。JSONにはモデルとmanifestのSHA-256、全画像の検証結果、設定、画像別と全体のRGB PSNR、実ファイル容量、処理別の時間を残す。全体PSNRは画像ごとのdBの平均ではなく、全RGB画素の二乗誤差を集計して求める。時間は実行環境や負荷で変わり、モデル推論は指定回数の平均。元JPEGの読込・decode、低解像度JPEG作成とbicubic拡大、DNN推論、出力JPEGのメモリ内encodeを分けている。出力JPEGの再圧縮誤差はPSNRに含めない。
+同じコマンドでFP16の`QSR1`と量子化したINT8の`QSI1`を比較できる。`QSI1`は12byteのヘッダー（形式、重み数、FP32 scale）と499byteの符号付き重みで、biasも含め全パラメータを一つのscaleで量子化する。モデル読込時にFP32へ展開し、その所要時間は`load_decode_ms`へ別記する。DNN推論時間に毎回のINT8展開は含まれない。後続のFP6形式は別途モデル読込器と推論経路へ追加する。
 
-保存した[検証用レポート](results/fp16_val.json)と[探索的評価用レポート](results/fp16_test_exploratory.json)は、従来の`eval`と同じ値（四捨五入してそれぞれ34.355→34.447 dB、31.151→31.382 dB）を再現する。レポート中の`evaluation_status`は両者を区別する。
+JSONにはモデルとmanifestのSHA-256、全画像の検証結果、設定、画像別と全体のRGB PSNR、実ファイル容量、処理別の時間を残す。全体PSNRは画像ごとのdBの平均ではなく、全RGB画素の二乗誤差を集計して求める。時間は実行環境や負荷で変わり、モデル推論は指定回数の平均。元JPEGの読込・decode、低解像度JPEG作成とbicubic拡大、DNN推論、出力JPEGのメモリ内encodeを分けている。出力JPEGの再圧縮誤差はPSNRに含めない。
+
+保存した[検証用レポート](results/fp16_val.json)と[探索的評価用レポート](results/fp16_test_exploratory.json)は、従来の`eval`と同じ値（四捨五入してそれぞれ34.355→34.447 dB、31.151→31.382 dB）を再現する。[FP16とINT8の共通評価レポート](results/fp16_int8_val.json)では、検証用4枚のPSNRがFP16で34.447 dB、INT8で34.444 dB、モデル容量がそれぞれ1006byteと511byteになった。レポート中の`evaluation_status`は検証用と探索的評価用を区別する。
 
 厳密な最終評価には、**モデル学習にも候補選択にも使用していない新しい画像**を別途用意する。最初の評価前に画像の出典・byte数・SHA-256を別manifestへ固定し、各レコードを`split: "final"`、`path: "final/01_filename.jpg"`の形で記録する。manifestの構造は既存のものと同じで、`gallery`には新しい画像群の出典ページURL、`page_sha256`にはそのページのSHA-256を入れる。その画像を`data/final/`へ配置し、次を実行する。
 
@@ -82,7 +87,7 @@ cargo run --release -- bench model.qsr input.jpg 5
 
 `eval` は評価用画像の中央切り出しを半分に縮小してJPEG圧縮し、そこから2倍に戻した画像と切り出し元を比較する。表示するPSNRはRGB全画素の二乗誤差から計算する。`upscale` で保存するJPEGの再圧縮誤差は、このPSNRには含まれない。
 
-`model.qsr` は `QSR1` 形式のモデルファイルで、重みはlittle-endianのFP16。現状の実装はCPU上で動く。
+`model.qsr` は `QSR1` 形式のモデルファイルで、重みはlittle-endianのFP16。比較用INT8は`QSI1`形式。現状の実装はCPU上で動く。
 
 `bench` は同じ拡大済み画像に対するDNN補正を、スカラー経路と使用環境で選ばれる経路で計測する。最後の数値は計測回数で、省略時は5回。JPEGの読み込み・bicubic拡大・JPEG保存の時間は含めず、画素値の最大差も表示する。学習の計算はSIMD化していない。
 
@@ -94,4 +99,4 @@ cargo run --release -- bench model.qsr input.jpg 5
 2. blockごとの形式選択
 3. 推論形式を固定したままのscale・丸め方の探索
 
-各候補で、PSNR、実ファイル容量（scaleや形式タグを含む）、推論時間を測る。候補の選択に使う画像と最終評価画像は分ける。量子化とその比較処理はまだ実装していない。
+各候補で、PSNR、実ファイル容量（scaleや形式タグを含む）、推論時間を測る。候補の選択に使う画像と最終評価画像は分ける。FP6の量子化と比較はまだ実装していない。
