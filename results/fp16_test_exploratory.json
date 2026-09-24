@@ -38,7 +38,8 @@
       "path": "data/gallery_fp16_selected.qsr",
       "format": "QSR1-FP16",
       "sha256": "23fa6e800b7fb1cc76f7d790bdb61c338d81ce66f588cfe0978c60c7bff57916",
-      "bytes": 1006
+      "bytes": 1006,
+      "load_decode_ms": 0.42691700000000005
     }
   ],
   "images": [
@@ -48,14 +49,14 @@
       "width": 512,
       "height": 512,
       "baseline_psnr_db": 37.81063273401031,
-      "source_read_decode_ms": 104.237584,
-      "synthetic_pair_ms": 7.456583,
+      "source_read_decode_ms": 104.646917,
+      "synthetic_pair_ms": 7.679250000000001,
       "models": [
         {
           "model_index": 0,
           "psnr_db": 37.848317140017535,
-          "inference_ms": 11.993139,
-          "output_jpeg_encode_ms": 1.855958
+          "inference_ms": 11.997444666666667,
+          "output_jpeg_encode_ms": 1.943083
         }
       ]
     },
@@ -65,14 +66,14 @@
       "width": 512,
       "height": 512,
       "baseline_psnr_db": 32.46528498615389,
-      "source_read_decode_ms": 364.997208,
-      "synthetic_pair_ms": 14.560625,
+      "source_read_decode_ms": 314.121083,
+      "synthetic_pair_ms": 7.5378750000000005,
       "models": [
         {
           "model_index": 0,
           "psnr_db": 32.46694156780155,
-          "inference_ms": 12.110055333333333,
-          "output_jpeg_encode_ms": 2.142416
+          "inference_ms": 11.851611333333333,
+          "output_jpeg_encode_ms": 2.1545
         }
       ]
     },
@@ -82,14 +83,14 @@
       "width": 512,
       "height": 512,
       "baseline_psnr_db": 26.57505048029018,
-      "source_read_decode_ms": 52.926792,
-      "synthetic_pair_ms": 7.252292,
+      "source_read_decode_ms": 51.6275,
+      "synthetic_pair_ms": 7.25,
       "models": [
         {
           "model_index": 0,
           "psnr_db": 26.90356528606443,
-          "inference_ms": 11.875707999999998,
-          "output_jpeg_encode_ms": 2.516541
+          "inference_ms": 11.806610999999998,
+          "output_jpeg_encode_ms": 2.485
         }
       ]
     },
@@ -99,14 +100,14 @@
       "width": 512,
       "height": 512,
       "baseline_psnr_db": 38.668074765057064,
-      "source_read_decode_ms": 95.344375,
-      "synthetic_pair_ms": 7.197875000000001,
+      "source_read_decode_ms": 94.890667,
+      "synthetic_pair_ms": 7.165625,
       "models": [
         {
           "model_index": 0,
           "psnr_db": 38.575777652111356,
-          "inference_ms": 12.192291333333335,
-          "output_jpeg_encode_ms": 2.194042
+          "inference_ms": 11.807055666666665,
+          "output_jpeg_encode_ms": 2.167375
         }
       ]
     }
@@ -119,8 +120,8 @@
       {
         "model_index": 0,
         "psnr_db": 31.38221670164888,
-        "mean_inference_ms_per_image": 12.042798416666667,
-        "mean_output_jpeg_encode_ms_per_image": 2.17723925
+        "mean_inference_ms_per_image": 11.865680666666664,
+        "mean_output_jpeg_encode_ms_per_image": 2.1874895
       }
     ]
   }

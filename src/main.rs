@@ -4,7 +4,7 @@ use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant};
 
 fn usage() -> &'static str {
-    "Usage:\n  quant-search-exp train <high_res_dir> <model.qsr> [epochs=8] [samples_per_epoch=20000] [jpeg_quality=70] [seed=42] [learning_rate=0.001]\n  quant-search-exp eval <model.qsr> <held_out_dir> [jpeg_quality=70]\n  quant-search-exp verify-data <manifest.json> <data_root>\n  quant-search-exp eval-report <manifest.json> <data_root> <val|test|final> <output.json> <model.qsr> [more_model.qsr...] [--quality N] [--runs N] [--exclude-manifest path]\n  quant-search-exp upscale <model.qsr> <input.jpg> <output.jpg>\n  quant-search-exp bench <model.qsr> <input.jpg> [runs=5]"
+    "Usage:\n  quant-search-exp train <high_res_dir> <model.qsr> [epochs=8] [samples_per_epoch=20000] [jpeg_quality=70] [seed=42] [learning_rate=0.001]\n  quant-search-exp eval <model.qsr> <held_out_dir> [jpeg_quality=70]\n  quant-search-exp quantize-int8 <model.qsr> <model.qi8>\n  quant-search-exp verify-data <manifest.json> <data_root>\n  quant-search-exp eval-report <manifest.json> <data_root> <val|test|final> <output.json> <model_file> [more_model_files...] [--quality N] [--runs N] [--exclude-manifest path]\n  quant-search-exp upscale <model.qsr> <input.jpg> <output.jpg>\n  quant-search-exp bench <model.qsr> <input.jpg> [runs=5]"
 }
 
 fn report_command(args: &[String]) -> Result<()> {
@@ -131,6 +131,14 @@ fn run() -> Result<()> {
                 metrics.model_psnr,
                 metrics.model_psnr - metrics.baseline_psnr
             );
+            Ok(())
+        }
+        Some("quantize-int8") if args.len() == 4 => {
+            if args[2] == args[3] {
+                return Err("input and output model paths must differ".into());
+            }
+            Model::load_fp16(Path::new(&args[2]))?.save_int8(Path::new(&args[3]))?;
+            println!("saved {}", args[3]);
             Ok(())
         }
         Some("verify-data") if args.len() == 4 => {
