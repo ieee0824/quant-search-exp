@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "runtime": {
+    "package_version": "0.1.0",
+    "os": "macos",
+    "arch": "aarch64",
+    "neon_enabled": true
+  },
+  "dataset": {
+    "manifest_path": "data/gallery_manifest.json",
+    "data_root": "data",
+    "manifest_sha256": "84597037ec5fe9c082892ea93a81d19b7b669915a064d867f6074dc94a685441",
+    "gallery": "https://blog.ast.moe/gallery/",
+    "gallery_page_sha256": "b62282c28ab2957ac9a632cc626946e0e79aadd6a5561fcdeb1ff18892458d6c",
+    "split": "val",
+    "evaluation_status": "candidate_selection_validation",
+    "exclusion_manifest_sha256": null,
+    "verification": {
+      "manifest_sha256": "84597037ec5fe9c082892ea93a81d19b7b669915a064d867f6074dc94a685441",
+      "images": 26,
+      "train": 18,
+      "val": 4,
+      "test": 4,
+      "final_holdout": 0,
+      "total_bytes": 281146180
+    }
+  },
+  "settings": {
+    "jpeg_quality": 70,
+    "output_jpeg_quality": 95,
+    "timing_runs": 5,
+    "crop": "center; at most 512x512; even dimensions; synthetic 2x JPEG input",
+    "psnr": "RGB pixel-weighted MSE; infinite PSNR encoded as null",
+    "timing": "milliseconds; decode, synthetic pair, DNN inference, and output JPEG encode are separate; inference mean over timing_runs"
+  },
+  "models": [
+    {
+      "path": "data/gallery_fp16_selected.qsr",
+      "format": "QSR1-FP16",
+      "sha256": "23fa6e800b7fb1cc76f7d790bdb61c338d81ce66f588cfe0978c60c7bff57916",
+      "bytes": 1006,
+      "parameters": 499,
+      "effective_bits_per_parameter": 16.128256513026052,
+      "fp6_weight_count": null,
+      "fp6_weight_stream_bits_per_weight": null,
+      "effective_bits_per_fp6_weight_including_all_overhead": null,
+      "load_decode_ms": 0.5438339999999999
+    },
+    {
+      "path": "data/gallery_fp6_e2m3.qsf",
+      "format": "QSF1-MXFP6-E2M3",
+      "sha256": "7463def07cd3976e221ece0b1edaae9169271254b19720a6ede7de6ebbcd6d17",
+      "bytes": 431,
+      "parameters": 499,
+      "effective_bits_per_parameter": 6.909819639278557,
+      "fp6_weight_count": 480,
+      "fp6_weight_stream_bits_per_weight": 6.283333333333333,
+      "effective_bits_per_fp6_weight_including_all_overhead": 7.183333333333334,
+      "load_decode_ms": 0.230459
+    },
+    {
+      "path": "data/gallery_fp6_e2m3_searched.qsf",
+      "format": "QSF1-MXFP6-E2M3",
+      "sha256": "11fd1936a1deee1286830faa0f03eebf044e0c93f60d09c59395bf17f9d18c49",
+      "bytes": 431,
+      "parameters": 499,
+      "effective_bits_per_parameter": 6.909819639278557,
+      "fp6_weight_count": 480,
+      "fp6_weight_stream_bits_per_weight": 6.283333333333333,
+      "effective_bits_per_fp6_weight_including_all_overhead": 7.183333333333334,
+      "load_decode_ms": 0.319458
+    }
+  ],
+  "images": [
+    {
+      "path": "val/05_IMG_7226_hu_e492cbc52c05b084.JPG",
+      "source_sha256": "d22dc8746d06f38889f2a01819fa9fdc8670dfc5f1ea0e530821f9f3f1711910",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 38.947478651455526,
+      "source_read_decode_ms": 108.839625,
+      "synthetic_pair_ms": 6.352959,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 38.93960127763648,
+          "inference_ms": 11.9213752,
+          "output_jpeg_encode_ms": 1.992875
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 38.94251617151759,
+          "inference_ms": 11.799442,
+          "output_jpeg_encode_ms": 2.0265
+        },
+        {
+          "model_index": 2,
+          "psnr_db": 38.94679489126617,
+          "inference_ms": 11.7967918,
+          "output_jpeg_encode_ms": 2.0151660000000002
+        }
+      ]
+    },
+    {
+      "path": "val/11_IMG_9434_hu_3fc2b870b13a87f3.jpg",
+      "source_sha256": "851a7f371162cc1fd7297edc78587d29743f67b0b607f016d0f866e08f660f05",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 29.772032710865467,
+      "source_read_decode_ms": 302.556459,
+      "synthetic_pair_ms": 7.024375,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 29.800462340205858,
+          "inference_ms": 12.0744668,
+          "output_jpeg_encode_ms": 3.08875
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 29.790077817093923,
+          "inference_ms": 11.78905,
+          "output_jpeg_encode_ms": 3.0095840000000003
+        },
+        {
+          "model_index": 2,
+          "psnr_db": 29.81784066824143,
+          "inference_ms": 11.7743748,
+          "output_jpeg_encode_ms": 2.9906249999999996
+        }
+      ]
+    },
+    {
+      "path": "val/17_DSCF3471_hu_c262cc22f34f35cd.jpg",
+      "source_sha256": "4f95bb0d861b4e9dbb14e74e95f020f4562cf1fa87b8ea0730c44ae26225b751",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 38.195108970274504,
+      "source_read_decode_ms": 45.593834,
+      "synthetic_pair_ms": 6.438584,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 38.93855625226141,
+          "inference_ms": 11.8536748,
+          "output_jpeg_encode_ms": 2.133709
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 38.91185290241108,
+          "inference_ms": 12.044641599999999,
+          "output_jpeg_encode_ms": 2.051334
+        },
+        {
+          "model_index": 2,
+          "psnr_db": 39.03817062587616,
+          "inference_ms": 11.800116599999999,
+          "output_jpeg_encode_ms": 2.0369580000000003
+        }
+      ]
+    },
+    {
+      "path": "val/23_IMG_5671_hu_6cadf1345ab68d43.jpg",
+      "source_sha256": "ac7be12bbfaa4fa73bb84c77b7c22178d7f185e312b2fed18e942a6339576df7",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 38.709944340565144,
+      "source_read_decode_ms": 91.369958,
+      "synthetic_pair_ms": 6.216958,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 38.71556650362053,
+          "inference_ms": 11.823849999999998,
+          "output_jpeg_encode_ms": 2.133791
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 38.718629425858765,
+          "inference_ms": 11.952741399999999,
+          "output_jpeg_encode_ms": 2.1405410000000002
+        },
+        {
+          "model_index": 2,
+          "psnr_db": 38.71091431340335,
+          "inference_ms": 11.791341400000002,
+          "output_jpeg_encode_ms": 2.114125
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "images": 4,
+    "rgb_channels": 3145728,
+    "baseline_psnr_db": 34.35501943741292,
+    "models": [
+      {
+        "model_index": 0,
+        "psnr_db": 34.44671941186475,
+        "mean_inference_ms_per_image": 11.918341700000001,
+        "mean_output_jpeg_encode_ms_per_image": 2.33728125
+      },
+      {
+        "model_index": 1,
+        "psnr_db": 34.43731794060316,
+        "mean_inference_ms_per_image": 11.89646875,
+        "mean_output_jpeg_encode_ms_per_image": 2.3069897500000005
+      },
+      {
+        "model_index": 2,
+        "psnr_db": 34.46836720749153,
+        "mean_inference_ms_per_image": 11.790656149999998,
+        "mean_output_jpeg_encode_ms_per_image": 2.2892185
+      }
+    ]
+  }
+}

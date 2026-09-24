@@ -7,6 +7,8 @@ use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 
 pub mod evaluation;
+pub mod experiments;
+pub mod fp6;
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
@@ -52,6 +54,55 @@ fn dot_neon(weights: &[f32], input: &[f32], bias: f32) -> f32 {
 #[derive(Clone)]
 pub struct Model {
     weights: [f32; PARAMS],
+}
+
+pub enum InferenceModel {
+    Plain(Box<Model>),
+    Fp6(fp6::Fp6Model),
+}
+
+impl InferenceModel {
+    pub fn load(path: &Path) -> Result<(Self, String)> {
+        let mut magic = [0_u8; 4];
+        File::open(path)?.read_exact(&mut magic)?;
+        if &magic == b"QSF1" {
+            let model = fp6::Fp6Model::load(path)?;
+            let format = model.format_name().to_string();
+            Ok((Self::Fp6(model), format))
+        } else {
+            let (model, format) = Model::load_for_evaluation(path)?;
+            Ok((Self::Plain(Box::new(model)), format.to_string()))
+        }
+    }
+
+    pub fn enhance(&self, base: &RgbImage) -> RgbImage {
+        match self {
+            Self::Plain(model) => model.enhance(base),
+            Self::Fp6(model) => model.enhance(base),
+        }
+    }
+}
+
+pub trait ImageEnhancer {
+    fn enhance_image(&self, base: &RgbImage) -> RgbImage;
+}
+
+impl ImageEnhancer for Model {
+    fn enhance_image(&self, base: &RgbImage) -> RgbImage {
+        self.enhance(base)
+    }
+}
+
+impl ImageEnhancer for InferenceModel {
+    fn enhance_image(&self, base: &RgbImage) -> RgbImage {
+        self.enhance(base)
+    }
+}
+
+impl ImageEnhancer for fp6::Fp6Model {
+    fn enhance_image(&self, base: &RgbImage) -> RgbImage {
+        self.enhance(base)
+    }
 }
 
 pub struct Pair {
@@ -530,7 +581,7 @@ pub fn evaluate(model: &Model, directory: &Path, quality: u8) -> Result<Metrics>
     })
 }
 
-pub fn upscale(model: &Model, input: &Path, output: &Path) -> Result<()> {
+pub fn upscale<M: ImageEnhancer>(model: &M, input: &Path, output: &Path) -> Result<()> {
     if input == output {
         return Err("input and output paths must differ".into());
     }
@@ -539,7 +590,7 @@ pub fn upscale(model: &Model, input: &Path, output: &Path) -> Result<()> {
         return Err("output path must end in .jpg or .jpeg".into());
     }
     let low = load_rgb(input)?;
-    let enhanced = model.enhance(&bicubic_2x(&low)?);
+    let enhanced = model.enhance_image(&bicubic_2x(&low)?);
     let mut file = File::create(output)?;
     DynamicImage::ImageRgb8(enhanced)
         .write_with_encoder(JpegEncoder::new_with_quality(&mut file, 95))?;

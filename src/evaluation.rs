@@ -1,6 +1,9 @@
 //! Reproducible dataset verification and comparison reports.
 
-use crate::{Model, Result, crops_from_image, load_rgb, make_pair, psnr, squared_error};
+use crate::{
+    ImageEnhancer, InferenceModel, Model, PARAMS, Pair, Result, crops_from_image, load_rgb,
+    make_pair, psnr, squared_error,
+};
 use image::ExtendedColorType;
 use image::codecs::jpeg::JpegEncoder;
 use serde::{Deserialize, Serialize};
@@ -43,12 +46,65 @@ pub struct Verification {
     pub total_bytes: u64,
 }
 
+/// The candidate-selection images are loaded once and are always the manifest's val split.
+pub struct ValidationSet {
+    pairs: Vec<Pair>,
+    pub manifest_sha256: String,
+    pub source_images: usize,
+    quality: u8,
+}
+
+impl ValidationSet {
+    pub fn load(manifest_path: &Path, data_root: &Path, quality: u8) -> Result<Self> {
+        if !(1..=100).contains(&quality) {
+            return Err("JPEG quality must be 1..100".into());
+        }
+        let verified = verify_manifest_data(manifest_path, data_root)?;
+        let (manifest, _) = read_manifest(manifest_path)?;
+        let mut pairs = Vec::new();
+        for image in manifest.images.iter().filter(|image| image.split == "val") {
+            let source = load_rgb(&data_root.join(&image.path))?;
+            let crop = crops_from_image(&source, false)?.remove(0);
+            pairs.push(make_pair(&crop, quality)?);
+        }
+        if pairs.is_empty() {
+            return Err("manifest has no validation images".into());
+        }
+        Ok(Self {
+            pairs,
+            manifest_sha256: verified.manifest_sha256,
+            source_images: verified.val,
+            quality,
+        })
+    }
+
+    pub fn quality(&self) -> u8 {
+        self.quality
+    }
+
+    pub fn score<M: ImageEnhancer>(&self, model: &M) -> f64 {
+        let mut error = 0.0;
+        let mut channels = 0_u64;
+        for pair in &self.pairs {
+            let rendered = model.enhance_image(&pair.base);
+            error += squared_error(&rendered, &pair.target);
+            channels += pair.target.width() as u64 * pair.target.height() as u64 * 3;
+        }
+        psnr(error / channels as f64)
+    }
+}
+
 #[derive(Serialize)]
 struct ModelIdentity {
     path: String,
     format: String,
     sha256: String,
     bytes: u64,
+    parameters: usize,
+    effective_bits_per_parameter: f64,
+    fp6_weight_count: Option<usize>,
+    fp6_weight_stream_bits_per_weight: Option<f64>,
+    effective_bits_per_fp6_weight_including_all_overhead: Option<f64>,
     load_decode_ms: f64,
 }
 
@@ -339,13 +395,25 @@ pub fn evaluate_report(
     for path in model_paths {
         let (sha256, bytes) = digest_file(path)?;
         let start = Instant::now();
-        let (model, format) = Model::load_for_evaluation(path)?;
+        let (model, format) = InferenceModel::load(path)?;
         let load_decode_ms = start.elapsed().as_secs_f64() * 1_000.0;
         identities.push(ModelIdentity {
             path: path.display().to_string(),
-            format: format.into(),
+            fp6_weight_count: format
+                .starts_with("QSF1")
+                .then_some(crate::fp6::QUANT_WEIGHTS),
+            fp6_weight_stream_bits_per_weight: format.starts_with("QSF1").then_some(
+                crate::fp6::Fp6Model::weight_stream_bytes() as f64 * 8.0
+                    / crate::fp6::QUANT_WEIGHTS as f64,
+            ),
+            effective_bits_per_fp6_weight_including_all_overhead: format
+                .starts_with("QSF1")
+                .then_some(bytes as f64 * 8.0 / crate::fp6::QUANT_WEIGHTS as f64),
+            format,
             sha256,
             bytes,
+            parameters: PARAMS,
+            effective_bits_per_parameter: bytes as f64 * 8.0 / PARAMS as f64,
             load_decode_ms,
         });
         models.push(model);
