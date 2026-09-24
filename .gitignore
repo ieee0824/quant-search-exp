@@ -4,3 +4,7 @@
 !/data/gallery_manifest.json
 !/data/gallery_fp16_selected.qsr
 !/data/gallery_int8_baseline.qi8
+!/data/gallery_fp6_e3m2.qsf
+!/data/gallery_fp6_e2m3.qsf
+!/data/gallery_fp6_mixed.qsf
+!/data/gallery_fp6_e2m3_searched.qsf

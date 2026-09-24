@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "runtime": {
+    "package_version": "0.1.0",
+    "os": "macos",
+    "arch": "aarch64",
+    "neon_enabled": true
+  },
+  "dataset": {
+    "manifest_path": "data/gallery_manifest.json",
+    "data_root": "data",
+    "manifest_sha256": "84597037ec5fe9c082892ea93a81d19b7b669915a064d867f6074dc94a685441",
+    "gallery": "https://blog.ast.moe/gallery/",
+    "gallery_page_sha256": "b62282c28ab2957ac9a632cc626946e0e79aadd6a5561fcdeb1ff18892458d6c",
+    "split": "test",
+    "evaluation_status": "exploratory: these test images were inspected during initial training selection",
+    "exclusion_manifest_sha256": null,
+    "verification": {
+      "manifest_sha256": "84597037ec5fe9c082892ea93a81d19b7b669915a064d867f6074dc94a685441",
+      "images": 26,
+      "train": 18,
+      "val": 4,
+      "test": 4,
+      "final_holdout": 0,
+      "total_bytes": 281146180
+    }
+  },
+  "settings": {
+    "jpeg_quality": 70,
+    "output_jpeg_quality": 95,
+    "timing_runs": 5,
+    "crop": "center; at most 512x512; even dimensions; synthetic 2x JPEG input",
+    "psnr": "RGB pixel-weighted MSE; infinite PSNR encoded as null",
+    "timing": "milliseconds; decode, synthetic pair, DNN inference, and output JPEG encode are separate; inference mean over timing_runs"
+  },
+  "models": [
+    {
+      "path": "data/gallery_fp16_selected.qsr",
+      "format": "QSR1-FP16",
+      "sha256": "23fa6e800b7fb1cc76f7d790bdb61c338d81ce66f588cfe0978c60c7bff57916",
+      "bytes": 1006,
+      "parameters": 499,
+      "effective_bits_per_parameter": 16.128256513026052,
+      "fp6_weight_count": null,
+      "fp6_weight_stream_bits_per_weight": null,
+      "effective_bits_per_fp6_weight_including_all_overhead": null,
+      "load_decode_ms": 0.446459
+    },
+    {
+      "path": "data/gallery_fp6_e3m2.qsf",
+      "format": "QSF1-MXFP6-E3M2",
+      "sha256": "9b385959c6f38552ec600a22fce47542e5b9440df9d04b7fb86244d0962872f7",
+      "bytes": 431,
+      "parameters": 499,
+      "effective_bits_per_parameter": 6.909819639278557,
+      "fp6_weight_count": 480,
+      "fp6_weight_stream_bits_per_weight": 6.283333333333333,
+      "effective_bits_per_fp6_weight_including_all_overhead": 7.183333333333334,
+      "load_decode_ms": 0.26675
+    },
+    {
+      "path": "data/gallery_fp6_e2m3.qsf",
+      "format": "QSF1-MXFP6-E2M3",
+      "sha256": "7463def07cd3976e221ece0b1edaae9169271254b19720a6ede7de6ebbcd6d17",
+      "bytes": 431,
+      "parameters": 499,
+      "effective_bits_per_parameter": 6.909819639278557,
+      "fp6_weight_count": 480,
+      "fp6_weight_stream_bits_per_weight": 6.283333333333333,
+      "effective_bits_per_fp6_weight_including_all_overhead": 7.183333333333334,
+      "load_decode_ms": 0.25825000000000004
+    }
+  ],
+  "images": [
+    {
+      "path": "test/06_545A0194_hu_7fb6c09e0567f66b.jpg",
+      "source_sha256": "16435c97f062a2b7397de6cd31b0da7987f306cbccaf45cdf2b675948f1a6dca",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 37.81063273401031,
+      "source_read_decode_ms": 105.83824999999999,
+      "synthetic_pair_ms": 6.477583999999999,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 37.848317140017535,
+          "inference_ms": 12.014966999999999,
+          "output_jpeg_encode_ms": 2.063
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 37.84078277459613,
+          "inference_ms": 11.791150400000001,
+          "output_jpeg_encode_ms": 1.9775830000000003
+        },
+        {
+          "model_index": 2,
+          "psnr_db": 37.849002307479964,
+          "inference_ms": 11.9679834,
+          "output_jpeg_encode_ms": 2.0146669999999998
+        }
+      ]
+    },
+    {
+      "path": "test/12_IMG_2485_hu_8d2fe7545e781763.jpg",
+      "source_sha256": "35666396b7069289b34359a04a709eb58a5fdaa507f0372c5ec6685d08b5c0b3",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 32.46528498615389,
+      "source_read_decode_ms": 312.979667,
+      "synthetic_pair_ms": 6.370749999999999,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 32.46694156780155,
+          "inference_ms": 11.7976916,
+          "output_jpeg_encode_ms": 2.2130829999999997
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 32.46603759978641,
+          "inference_ms": 11.792050200000002,
+          "output_jpeg_encode_ms": 2.204709
+        },
+        {
+          "model_index": 2,
+          "psnr_db": 32.46557864428232,
+          "inference_ms": 11.831308400000001,
+          "output_jpeg_encode_ms": 2.275541
+        }
+      ]
+    },
+    {
+      "path": "test/18_IMG_6638_hu_263c54e9af5c59e0.jpg",
+      "source_sha256": "544887f24812f2a68f61f1953de309aabc60901afe90548c7dce9e68129b50b8",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 26.57505048029018,
+      "source_read_decode_ms": 52.458,
+      "synthetic_pair_ms": 6.3698749999999995,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 26.90356528606443,
+          "inference_ms": 11.7999416,
+          "output_jpeg_encode_ms": 2.5946670000000003
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 26.899628521058414,
+          "inference_ms": 11.814142,
+          "output_jpeg_encode_ms": 2.647042
+        },
+        {
+          "model_index": 2,
+          "psnr_db": 26.896881807149697,
+          "inference_ms": 11.806099799999998,
+          "output_jpeg_encode_ms": 2.586417
+        }
+      ]
+    },
+    {
+      "path": "test/24_IMG_7187_hu_80e8925285f1ffe4.jpg",
+      "source_sha256": "72db11e12c5af9a25427c5adf4a2f73a2a4b014e22d71fe4fb95419a40e7f134",
+      "width": 512,
+      "height": 512,
+      "baseline_psnr_db": 38.668074765057064,
+      "source_read_decode_ms": 94.248333,
+      "synthetic_pair_ms": 6.366583,
+      "models": [
+        {
+          "model_index": 0,
+          "psnr_db": 38.575777652111356,
+          "inference_ms": 11.8040752,
+          "output_jpeg_encode_ms": 2.311334
+        },
+        {
+          "model_index": 1,
+          "psnr_db": 38.4495327989752,
+          "inference_ms": 11.810341600000001,
+          "output_jpeg_encode_ms": 2.2975
+        },
+        {
+          "model_index": 2,
+          "psnr_db": 38.61496820488781,
+          "inference_ms": 11.7791334,
+          "output_jpeg_encode_ms": 2.286625
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "images": 4,
+    "rgb_channels": 3145728,
+    "baseline_psnr_db": 31.151105179305162,
+    "models": [
+      {
+        "model_index": 0,
+        "psnr_db": 31.38221670164888,
+        "mean_inference_ms_per_image": 11.85416885,
+        "mean_output_jpeg_encode_ms_per_image": 2.295521
+      },
+      {
+        "model_index": 1,
+        "psnr_db": 31.37275294337984,
+        "mean_inference_ms_per_image": 11.80192105,
+        "mean_output_jpeg_encode_ms_per_image": 2.2817085
+      },
+      {
+        "model_index": 2,
+        "psnr_db": 31.379162550286853,
+        "mean_inference_ms_per_image": 11.84613125,
+        "mean_output_jpeg_encode_ms_per_image": 2.2908125
+      }
+    ]
+  }
+}

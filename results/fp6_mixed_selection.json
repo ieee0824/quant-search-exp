@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "experiment": "greedy_block_format_selection",
+  "source_model_sha256": "23fa6e800b7fb1cc76f7d790bdb61c338d81ce66f588cfe0978c60c7bff57916",
+  "validation_manifest_sha256": "84597037ec5fe9c082892ea93a81d19b7b669915a064d867f6074dc94a685441",
+  "selection_split": "val",
+  "selection_images": 4,
+  "jpeg_quality": 70,
+  "format": "QSF1-MXFP6-MIXED",
+  "block_size": 32,
+  "baseline_e3m2_psnr_db": 34.397606847177094,
+  "baseline_e2m3_psnr_db": 34.43731794060316,
+  "baseline_psnr_db": 34.43731794060316,
+  "selected_psnr_db": 34.447013726301314,
+  "trials": [
+    {
+      "block": 0,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.43552793120919,
+      "accepted": false
+    },
+    {
+      "block": 1,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.436774638557324,
+      "accepted": false
+    },
+    {
+      "block": 2,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.43109815559977,
+      "accepted": false
+    },
+    {
+      "block": 3,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.4351207341137,
+      "accepted": false
+    },
+    {
+      "block": 4,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.432182170930204,
+      "accepted": false
+    },
+    {
+      "block": 5,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.4366250242133,
+      "accepted": false
+    },
+    {
+      "block": 6,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.436549953605,
+      "accepted": false
+    },
+    {
+      "block": 7,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.431015052838035,
+      "accepted": false
+    },
+    {
+      "block": 8,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.44337110554294,
+      "accepted": true
+    },
+    {
+      "block": 9,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.43964885945724,
+      "accepted": false
+    },
+    {
+      "block": 10,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.436392504148166,
+      "accepted": false
+    },
+    {
+      "block": 11,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.43026560962003,
+      "accepted": false
+    },
+    {
+      "block": 12,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.44036256226597,
+      "accepted": false
+    },
+    {
+      "block": 13,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.447013726301314,
+      "accepted": true
+    },
+    {
+      "block": 14,
+      "format": "E3M2",
+      "scale_offset": 0,
+      "clip_ratio": 1.0,
+      "rounding": "nearest_even",
+      "validation_psnr_db": 34.44563997648403,
+      "accepted": false
+    }
+  ],
+  "trial_count": 15,
+  "search_ms": 736.213083,
+  "forced_mixed_for_comparison": false,
+  "selected_e3m2_blocks": 2,
+  "selected_e2m3_blocks": 13,
+  "output_model_sha256": "4cefa17950e4ef9fdbe398b935fec64d56473e84f14ec9768a245eadd74fba83",
+  "output_file_bytes": 431
+}
