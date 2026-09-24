@@ -1,0 +1,214 @@
+{
+  "gallery": "https://blog.ast.moe/gallery/",
+  "page_sha256": "b62282c28ab2957ac9a632cc626946e0e79aadd6a5561fcdeb1ff18892458d6c",
+  "images": [
+    {
+      "index": 1,
+      "source_url": "https://blog.ast.moe/images/other/545A0727_hu_460fd5c3decfe3e6.jpg",
+      "split": "train",
+      "path": "train/01_545A0727_hu_460fd5c3decfe3e6.jpg",
+      "bytes": 19713391,
+      "sha256": "a3af649bb3609f7e266c0567e67680845cef252c6c56a1cf3ee37a8f788134c4"
+    },
+    {
+      "index": 2,
+      "source_url": "https://blog.ast.moe/images/other/IMG_1363_hu_ef6999c599066273.jpg",
+      "split": "train",
+      "path": "train/02_IMG_1363_hu_ef6999c599066273.jpg",
+      "bytes": 15424754,
+      "sha256": "2fe1459fce578175e0682c064958fe2251817880468a49a02b247055950595e4"
+    },
+    {
+      "index": 3,
+      "source_url": "https://blog.ast.moe/images/other/IMG_4620_hu_114c672f3a5c833f.JPG",
+      "split": "train",
+      "path": "train/03_IMG_4620_hu_114c672f3a5c833f.JPG",
+      "bytes": 6931308,
+      "sha256": "0dae8f83c7c5b10359fb3afc5026462c5ce563c030b0b6e89e2af36825fe496f"
+    },
+    {
+      "index": 4,
+      "source_url": "https://blog.ast.moe/images/other/IMG_7359_hu_987dd6402e3fa530.JPG",
+      "split": "train",
+      "path": "train/04_IMG_7359_hu_987dd6402e3fa530.JPG",
+      "bytes": 8591893,
+      "sha256": "1e33669ee10ce7dd3b77d0333402abd909e4ee595225fc62f66691e6dad9bdb7"
+    },
+    {
+      "index": 5,
+      "source_url": "https://blog.ast.moe/images/other/IMG_7226_hu_e492cbc52c05b084.JPG",
+      "split": "val",
+      "path": "val/05_IMG_7226_hu_e492cbc52c05b084.JPG",
+      "bytes": 6718628,
+      "sha256": "d22dc8746d06f38889f2a01819fa9fdc8670dfc5f1ea0e530821f9f3f1711910"
+    },
+    {
+      "index": 6,
+      "source_url": "https://blog.ast.moe/images/other/545A0194_hu_7fb6c09e0567f66b.jpg",
+      "split": "test",
+      "path": "test/06_545A0194_hu_7fb6c09e0567f66b.jpg",
+      "bytes": 6181460,
+      "sha256": "16435c97f062a2b7397de6cd31b0da7987f306cbccaf45cdf2b675948f1a6dca"
+    },
+    {
+      "index": 7,
+      "source_url": "https://blog.ast.moe/images/2023-02-15/IMG_4640_hu_705d193a3b570ea.jpg",
+      "split": "train",
+      "path": "train/07_IMG_4640_hu_705d193a3b570ea.jpg",
+      "bytes": 22315790,
+      "sha256": "19391afd879c1afe4f78a18f49e11e925e16a29a018352ab7eaacb20fbe4a454"
+    },
+    {
+      "index": 8,
+      "source_url": "https://blog.ast.moe/images/2023-02-15/IMG_9527_hu_1115294ff09bf112.jpg",
+      "split": "train",
+      "path": "train/08_IMG_9527_hu_1115294ff09bf112.jpg",
+      "bytes": 16122998,
+      "sha256": "6501f29a87368b8a49c74a406303eecd00519028208ec069f433534e407446dc"
+    },
+    {
+      "index": 9,
+      "source_url": "https://blog.ast.moe/images/2023-02-15/IMG_2464_hu_a10da1d76a8cd931.jpg",
+      "split": "train",
+      "path": "train/09_IMG_2464_hu_a10da1d76a8cd931.jpg",
+      "bytes": 25228827,
+      "sha256": "40237be089dd40c7c00e4da86721967eb671d715da8d62810013a35b6042ea40"
+    },
+    {
+      "index": 10,
+      "source_url": "https://blog.ast.moe/images/other/IMG_7372_hu_d05ae4a2d74dcc9.jpg",
+      "split": "train",
+      "path": "train/10_IMG_7372_hu_d05ae4a2d74dcc9.jpg",
+      "bytes": 12072675,
+      "sha256": "282817460a81382036be6d390d831f736456c853cbfae50ea5d86e8698a1ede0"
+    },
+    {
+      "index": 11,
+      "source_url": "https://blog.ast.moe/images/2023-02-15/IMG_9434_hu_3fc2b870b13a87f3.jpg",
+      "split": "val",
+      "path": "val/11_IMG_9434_hu_3fc2b870b13a87f3.jpg",
+      "bytes": 22350498,
+      "sha256": "851a7f371162cc1fd7297edc78587d29743f67b0b607f016d0f866e08f660f05"
+    },
+    {
+      "index": 12,
+      "source_url": "https://blog.ast.moe/images/2023-02-15/IMG_2485_hu_8d2fe7545e781763.jpg",
+      "split": "test",
+      "path": "test/12_IMG_2485_hu_8d2fe7545e781763.jpg",
+      "bytes": 22011066,
+      "sha256": "35666396b7069289b34359a04a709eb58a5fdaa507f0372c5ec6685d08b5c0b3"
+    },
+    {
+      "index": 13,
+      "source_url": "https://blog.ast.moe/images/other/IMG_2156_hu_423bd8ca8e1934c0.jpg",
+      "split": "train",
+      "path": "train/13_IMG_2156_hu_423bd8ca8e1934c0.jpg",
+      "bytes": 12175072,
+      "sha256": "4e7bfc729b20c81495df1f71ccd7c363eb75fdf481071d0d001bbe7554d1fb23"
+    },
+    {
+      "index": 14,
+      "source_url": "https://blog.ast.moe/images/IMG_8992_hu_30db40da92f0923b.JPG",
+      "split": "train",
+      "path": "train/14_IMG_8992_hu_30db40da92f0923b.JPG",
+      "bytes": 7035765,
+      "sha256": "001cfaf24c1fae632d6f3b77d6b93313e100e8709020fefccf58ac835954f993"
+    },
+    {
+      "index": 15,
+      "source_url": "https://blog.ast.moe/images/other/545A0304_hu_192fe0a0fec82c09.jpg",
+      "split": "train",
+      "path": "train/15_545A0304_hu_192fe0a0fec82c09.jpg",
+      "bytes": 11937275,
+      "sha256": "6d7071bb522f955bbd5d94df5670a5de73484a8c29f674100121a1301f72839e"
+    },
+    {
+      "index": 16,
+      "source_url": "https://blog.ast.moe/images/other/006_hu_998e1b6a7987926b.jpg",
+      "split": "train",
+      "path": "train/16_006_hu_998e1b6a7987926b.jpg",
+      "bytes": 8872762,
+      "sha256": "5ac6023a9d18728d6fcb85c95fa94b3cb7b904bc96cdefb242009359a66fd07c"
+    },
+    {
+      "index": 17,
+      "source_url": "https://blog.ast.moe/images/other/DSCF3471_hu_c262cc22f34f35cd.jpg",
+      "split": "val",
+      "path": "val/17_DSCF3471_hu_c262cc22f34f35cd.jpg",
+      "bytes": 2193496,
+      "sha256": "4f95bb0d861b4e9dbb14e74e95f020f4562cf1fa87b8ea0730c44ae26225b751"
+    },
+    {
+      "index": 18,
+      "source_url": "https://blog.ast.moe/images/other/IMG_6638_hu_263c54e9af5c59e0.jpg",
+      "split": "test",
+      "path": "test/18_IMG_6638_hu_263c54e9af5c59e0.jpg",
+      "bytes": 3642440,
+      "sha256": "544887f24812f2a68f61f1953de309aabc60901afe90548c7dce9e68129b50b8"
+    },
+    {
+      "index": 19,
+      "source_url": "https://blog.ast.moe/images/other/IMG_5635_hu_c2580af8e66665a8.JPG",
+      "split": "train",
+      "path": "train/19_IMG_5635_hu_c2580af8e66665a8.JPG",
+      "bytes": 6649897,
+      "sha256": "22e03248740d603454135e32fd176ca9050fad90cca0e91ae7828f0f6de35838"
+    },
+    {
+      "index": 20,
+      "source_url": "https://blog.ast.moe/images/other/IMG_7331_hu_2be972bcaae19156.jpg",
+      "split": "train",
+      "path": "train/20_IMG_7331_hu_2be972bcaae19156.jpg",
+      "bytes": 7153523,
+      "sha256": "2ef952895ac2022150df161ccc493992d9bdfcff7270ed39575a24ea9fe63b84"
+    },
+    {
+      "index": 21,
+      "source_url": "https://blog.ast.moe/images/other/IMG_2829_hu_4b4da6fc0ac89205.jpg",
+      "split": "train",
+      "path": "train/21_IMG_2829_hu_4b4da6fc0ac89205.jpg",
+      "bytes": 4956377,
+      "sha256": "5e4636c75ee836a5a58dacd858f0f76abca1822186c6f798dccb074192ef239d"
+    },
+    {
+      "index": 22,
+      "source_url": "https://blog.ast.moe/images/other/IMG_0136_hu_8e69035acd20efac.JPG",
+      "split": "train",
+      "path": "train/22_IMG_0136_hu_8e69035acd20efac.JPG",
+      "bytes": 7038936,
+      "sha256": "94aadbd6d5006ee55d1a73a3956735be455f1251e19b0b97625125dbe761df05"
+    },
+    {
+      "index": 23,
+      "source_url": "https://blog.ast.moe/images/other/IMG_5671_hu_6cadf1345ab68d43.jpg",
+      "split": "val",
+      "path": "val/23_IMG_5671_hu_6cadf1345ab68d43.jpg",
+      "bytes": 6110114,
+      "sha256": "ac7be12bbfaa4fa73bb84c77b7c22178d7f185e312b2fed18e942a6339576df7"
+    },
+    {
+      "index": 24,
+      "source_url": "https://blog.ast.moe/images/other/IMG_7187_hu_80e8925285f1ffe4.jpg",
+      "split": "test",
+      "path": "test/24_IMG_7187_hu_80e8925285f1ffe4.jpg",
+      "bytes": 6023277,
+      "sha256": "72db11e12c5af9a25427c5adf4a2f73a2a4b014e22d71fe4fb95419a40e7f134"
+    },
+    {
+      "index": 25,
+      "source_url": "https://blog.ast.moe/images/other/IMG_5530_hu_46ed08cc722fb5cd.jpg",
+      "split": "train",
+      "path": "train/25_IMG_5530_hu_46ed08cc722fb5cd.jpg",
+      "bytes": 4031332,
+      "sha256": "40be0c5e9128432f081115f1098affa4a26e9d9d126804a1254ed36943e0aad8"
+    },
+    {
+      "index": 26,
+      "source_url": "https://blog.ast.moe/images/other/DSCF3508_hu_7c074ca73b6cf97e.jpg",
+      "split": "train",
+      "path": "train/26_DSCF3508_hu_7c074ca73b6cf97e.jpg",
+      "bytes": 9662626,
+      "sha256": "5a1891faee23ea43c9da67aedf166204812f3a0974f391c4e221c7524228146a"
+    }
+  ]
+}
